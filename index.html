@@ -18,16 +18,16 @@
                         // Colores de fondo inspirados en la última imagen (azul oscuro/morado)
                         'gradient-main-start': '#2a2a4a', /* Azul oscuro */
                         'gradient-main-end': '#4a2a4a', /* Morado oscuro */
-                         // Definir colores para los degradados de elementos (mantener un contraste)
-                         'gradient-element-start': '#6a4a8a', /* Tono morado */
-                         'gradient-element-end': '#8a6a4a', /* Tono dorado/naranja */
-                         'gradient-element-hover-start': '#5a3a7a',
-                         'gradient-element-hover-end': '#7a5a3a',
-                         // Colores para el menú lateral (fondo oscuro, texto blanco)
-                         'sidebar-bg': '#1a1a3a', /* Azul muy oscuro para la barra lateral */
-                         'sidebar-link': '#ffffff', /* Blanco para enlaces */
-                         'sidebar-link-hover': '#e0e0e0', /* Gris claro al pasar el ratón */
-                         'sidebar-active': '#4a2a4a', /* Morado oscuro para activo */
+                        // Definir colores para los degradados de elementos (mantener un contraste)
+                        'gradient-element-start': '#6a4a8a', /* Tono morado */
+                        'gradient-element-end': '#8a6a4a', /* Tono dorado/naranja */
+                        'gradient-element-hover-start': '#5a3a7a',
+                        'gradient-element-hover-end': '#7a5a3a',
+                        // Colores para el menú lateral (fondo oscuro, texto blanco)
+                        'sidebar-bg': '#1a1a3a', /* Azul muy oscuro para la barra lateral */
+                        'sidebar-link': '#ffffff', /* Blanco para enlaces */
+                        'sidebar-link-hover': '#e0e0e0', /* Gris claro al pasar el ratón */
+                        'sidebar-active': '#4a2a4a', /* Morado oscuro para activo */
                     }
                 }
             }
@@ -203,10 +203,10 @@
              color: #eee; /* Texto claro en la tabla */
         }
          .table th {
-            background-color: rgba(242, 242, 242, 0.1); /* Fondo de encabezado con opacidad */
-            font-weight: medium;
+             background-color: rgba(242, 242, 242, 0.1); /* Fondo de encabezado con opacidad */
+             font-weight: medium;
              color: white; /* Texto blanco en encabezados */
-        }
+         }
          .table td[contenteditable="true"] {
              background-color: rgba(238, 238, 255, 0.1); /* Ligero fondo con opacidad */
              cursor: text;
@@ -221,47 +221,47 @@
             background-color: rgba(249, 249, 249, 0.05); /* Rayado para filas con opacidad muy baja */
         }
          /* Estilos para la vista de detalle de cliente */
-        #detalle-cliente-view {
-            display: none;
-            padding: 30px;
-            background-color: rgba(255, 255, 255, 0.1); /* Fondo con opacidad */
-            border-radius: 30px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            margin: 20px auto;
-            max-width: 1200px;
+         #detalle-cliente-view {
+             display: none;
+             padding: 30px;
+             background-color: rgba(255, 255, 255, 0.1); /* Fondo con opacidad */
+             border-radius: 30px;
+             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+             backdrop-filter: blur(8px);
+             margin: 20px auto;
+             max-width: 1200px;
              color: #eee; /* Texto claro */
-        }
-         #detalle-cliente-view h2 {
-            background: linear-gradient(to right, var(--tw-gradient-element-start) 0%, var(--tw-gradient-element-end) 100%);
-            --tw-gradient-element-start: #6a4a8a; /* Tono morado */
-            --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: bold;
          }
-         #detalle-cliente-view label {
+          #detalle-cliente-view h2 {
+             background: linear-gradient(to right, var(--tw-gradient-element-start) 0%, var(--tw-gradient-element-end) 100%);
+             --tw-gradient-element-start: #6a4a8a; /* Tono morado */
+             --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
+             -webkit-background-clip: text;
+             -webkit-text-fill-color: transparent;
+             font-size: 2.5rem;
+             margin-bottom: 10px;
+             font-weight: bold;
+          }
+          #detalle-cliente-view label {
              color: #ccc; /* Color para las etiquetas */
-         }
-         #detalle-cliente-view .text-gray-700 { /* Ajustar color de texto para RFC */
+          }
+          #detalle-cliente-view .text-gray-700 { /* Ajustar color de texto para RFC */
              color: #ccc;
-         }
+          }
 
 
          .dashboard-placeholder {
-            height: 300px;
-            background: linear-gradient(to right, rgba(106, 74, 138, 0.3), rgba(138, 106, 74, 0.3)); /* Degradado suave con opacidad */
-            border-radius: 18px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #ccc; /* Texto claro */
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.2); /* Sombra interior */
+             height: 300px;
+             background: linear-gradient(to right, rgba(106, 74, 138, 0.3), rgba(138, 106, 74, 0.3)); /* Degradado suave con opacidad */
+             border-radius: 18px;
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             justify-content: center;
+             color: #ccc; /* Texto claro */
+             font-size: 1.5rem;
+             margin-bottom: 30px;
+             box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.2); /* Sombra interior */
          }
           .dashboard-placeholder p {
               color: #bbb; /* Texto más claro dentro del placeholder */
@@ -320,71 +320,71 @@
          }
 
          /* Estilo para el nuevo elemento visual en Inicio */
-        .inicio-visual-card {
-            background: linear-gradient(to right, var(--tw-gradient-element-start) 0%, var(--tw-gradient-element-end) 100%);
-            --tw-gradient-element-start: #6a4a8a; /* Tono morado */
-            --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
-            color: white;
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-        }
-         /* Estilos para el área de gráficos */
-        #graficos .card {
-            padding: 30px;
-             /* Aplicar degradado al card de gráficos */
-            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.15), rgba(240, 240, 255, 0.1)); /* Degradado con opacidad */
-        }
-        #graficos .chart-container {
-            margin-bottom: 30px;
-            background-color: rgba(249, 249, 249, 0.1); /* Fondo con opacidad */
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-         #graficos-area h3 {
+         .inicio-visual-card {
              background: linear-gradient(to right, var(--tw-gradient-element-start) 0%, var(--tw-gradient-element-end) 100%);
-            --tw-gradient-element-start: #6a4a8a; /* Tono morado */
-            --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.8rem;
-            font-weight: bold;
-             color: white !important; /* Texto del mensaje personalizado siempre blanco */
+             --tw-gradient-element-start: #6a4a8a; /* Tono morado */
+             --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
+             color: white;
+             border-radius: 20px;
+             padding: 30px;
+             text-align: center;
+             font-size: 1.8rem;
+             font-weight: bold;
+             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
          }
-         /* Contenedor para limitar el tamaño del canvas del gráfico */
-         .chart-canvas-container {
-             position: relative; /* Necesario para que el canvas ocupe el 100% del contenedor */
-             height: 300px; /* Altura fija para limitar el tamaño del gráfico */
-             width: 100%; /* Ancho completo del contenedor */
+          /* Estilos para el área de gráficos */
+          #graficos .card {
+              padding: 30px;
+              /* Aplicar degradado al card de gráficos */
+              background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.15), rgba(240, 240, 255, 0.1)); /* Degradado con opacidad */
+          }
+         #graficos .chart-container {
+             margin-bottom: 30px;
+             background-color: rgba(249, 249, 249, 0.1); /* Fondo con opacidad */
+             border-radius: 15px;
+             padding: 20px;
+             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
          }
-         .chart-canvas-container canvas {
-             display: block; /* Evita espacio extra debajo del canvas */
-             width: 100% !important; /* Asegura que Chart.js use el 100% del ancho del contenedor */
-             height: 100% !important; /* Asegura que Chart.js use el 100% de la altura del contenedor */
-         }
-         /* Estilos para la leyenda de la gráfica de pastel */
-         .pie-chart-legend {
-             display: flex;
-             flex-direction: column;
-             align-items: flex-start;
-             margin-left: 20px;
-             color: #eee; /* Texto claro para la leyenda */
-         }
-         .pie-chart-legend-item {
-             display: flex;
-             align-items: center;
-             margin-bottom: 5px;
-         }
-         .pie-chart-legend-color {
-             width: 15px;
-             height: 15px;
-             border-radius: 3px;
-             margin-right: 10px;
-         }
+          #graficos-area h3 {
+              background: linear-gradient(to right, var(--tw-gradient-element-start) 0%, var(--tw-gradient-element-end) 100%);
+              --tw-gradient-element-start: #6a4a8a; /* Tono morado */
+              --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              font-size: 1.8rem;
+              font-weight: bold;
+              color: white !important; /* Texto del mensaje personalizado siempre blanco */
+          }
+          /* Contenedor para limitar el tamaño del canvas del gráfico */
+          .chart-canvas-container {
+              position: relative; /* Necesario para que el canvas ocupe el 100% del contenedor */
+              height: 300px; /* Altura fija para limitar el tamaño del gráfico */
+              width: 100%; /* Ancho completo del contenedor */
+          }
+          .chart-canvas-container canvas {
+              display: block; /* Evita espacio extra debajo del canvas */
+              width: 100% !important; /* Asegura que Chart.js use el 100% del ancho del contenedor */
+              height: 100% !important; /* Asegura que Chart.js use el 100% de la altura del contenedor */
+          }
+          /* Estilos para la leyenda de la gráfica de pastel */
+          .pie-chart-legend {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              margin-left: 20px;
+              color: #eee; /* Texto claro para la leyenda */
+          }
+          .pie-chart-legend-item {
+              display: flex;
+              align-items: center;
+              margin-bottom: 5px;
+          }
+          .pie-chart-legend-color {
+              width: 15px;
+              height: 15px;
+              border-radius: 3px;
+              margin-right: 10px;
+          }
     </style>
 </head>
 <body>
@@ -453,7 +453,7 @@
                             <canvas id="graficoAnual"></canvas>
                         </div>
                          <div class="mt-4 text-sm text-gray-700">
-                            <p>Nota: Este gráfico muestra la evolución mensual de Ingresos, Gastos e Impuestos para el año actual.</p>
+                             <p>Nota: Este gráfico muestra la evolución mensual de Ingresos, Gastos e Impuestos para el año actual.</p>
                          </div>
                     </div>
 
@@ -481,15 +481,15 @@
                               <button class="btn btn-sm" onclick="updateMonthlyPieChart()">Mostrar Gráfica</button>
                          </div>
                          <div class="flex flex-col md:flex-row items-center">
-                            <div class="chart-canvas-container flex-grow">
-                                <canvas id="graficoMensualPie"></canvas>
-                            </div>
+                             <div class="chart-canvas-container flex-grow">
+                                 <canvas id="graficoMensualPie"></canvas>
+                             </div>
                              <div id="pie-chart-legend" class="pie-chart-legend mt-4 md:mt-0">
                                  </div>
                          </div>
 
                          <div class="mt-4 text-sm text-gray-700">
-                            <p>Nota: Selecciona un mes y año para ver el desglose de Ingresos, Gastos e Impuestos en la gráfica de pastel.</p>
+                             <p>Nota: Selecciona un mes y año para ver el desglose de Ingresos, Gastos e Impuestos en la gráfica de pastel.</p>
                          </div>
                     </div>
                      </div>
@@ -599,7 +599,11 @@
 
 
 <script>
-    // Datos de ejemplo (se pueden cargar desde localStorage o un backend)
+    // URL de tu Google Apps Script publicado como Web App
+    // ¡¡¡REEMPLAZA ESTA URL CON LA TUYA!!!
+    const APPS_SCRIPT_URL = 'TU_URL_DE_APPS_SCRIPT_AQUI';
+
+    // Array para almacenar los clientes en el frontend, se llenará desde Google Sheets
     let clientes = [];
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     const añoActual = new Date().getFullYear();
@@ -608,6 +612,18 @@
     let graficoAnualChart = null;
     let graficoMensualPieChart = null;
 
+    // Variable para rastrear el ID del cliente que se está viendo o editando
+    let clienteActualId = null;
+    let añoSeleccionado = añoActual; // Año por defecto para la vista de detalle y gráficos
+
+    // --- Funciones de Utilidad ---
+
+    // Función para mostrar mensajes de error o éxito
+    function mostrarMensaje(mensaje, tipo = 'info') {
+        // Implementar una forma de mostrar mensajes al usuario (ej. un div en el HTML)
+        console.log(`${tipo.toUpperCase()}: ${mensaje}`);
+        //alert(mensaje); // Usar alert solo para depuración, mejor usar un div modal o similar
+    }
 
     // Función para cambiar entre la vista principal (pestañas) y la vista de detalle de cliente
     function mostrarVista(vistaId) {
@@ -623,9 +639,8 @@
         }
     }
 
-
     // Función para cambiar de pestaña en el menú lateral
-    function openTab(event, tabId) {
+    async function openTab(event, tabId) {
          // Asegurarse de estar en la vista principal
          mostrarVista('main');
 
@@ -652,78 +667,172 @@
              document.querySelector('.sidebar-nav-link').classList.add('active');
         }
 
-
-        // Si cambiamos a la pestaña de inicio, actualizar el resumen
+        // Lógica específica al abrir cada pestaña
         if (tabId === 'inicio') {
-            actualizarResumenInicio();
+            await actualizarResumenInicio(); // Ahora es asíncrono
         }
-         // Si cambiamos a la pestaña de clientes, listar los clientes
          if (tabId === 'clientes') {
-            listarClientes();
-        }
-         // Si cambiamos a la pestaña de gráficos, cargar los clientes en el selector
+             await listarClientes(); // Ahora es asíncrono
+         }
          if (tabId === 'graficos') {
-             cargarClientesEnSelectorGraficos();
+             await cargarClientesEnSelectorGraficos(); // Ahora es asíncrono
              // Ocultar el área de gráficos hasta que se seleccione un cliente
              document.getElementById('graficos-area').style.display = 'none';
              document.getElementById('no-cliente-selected').style.display = 'block';
          }
     }
 
+    // --- Funcionalidad de Comunicación con Google Apps Script ---
+
+    // Función genérica para enviar datos al Apps Script
+    async function enviarDatosAppsScript(action, data = {}) {
+        try {
+            const response = await fetch(APPS_SCRIPT_URL, {
+                method: 'POST', // Usamos POST para enviar datos y acciones
+                headers: {
+                    // Apps Script a menudo maneja text/plain y parsea el JSON internamente
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                // Enviamos un objeto con la acción a realizar y los datos necesarios
+                body: JSON.stringify({ action: action, data: data })
+            });
+
+            if (!response.ok) {
+                // Si la respuesta HTTP no es 2xx, lanzar un error
+                const errorText = await response.text(); // Intentar leer el cuerpo del error
+                throw new Error(`Error HTTP: ${response.status} - ${response.statusText}. Detalle: ${errorText}`);
+            }
+
+            // Asumimos que el Apps Script siempre devuelve JSON
+            const result = await response.json();
+
+            if (result.status === 'error') {
+                // Si el script devuelve un status 'error' en su JSON
+                 throw new Error(`Error del Apps Script: ${result.message}`);
+            }
+
+            return result; // Devuelve el resultado del Apps Script (si status es 'success')
+
+        } catch (error) {
+            console.error('Error en la comunicación con Apps Script:', error);
+            mostrarMensaje(`Error: ${error.message}`, 'error');
+            throw error; // Propagar el error para que las funciones que llaman puedan manejarlo
+        }
+    }
+
+    // Función genérica para obtener datos del Apps Script (usando GET)
+    async function obtenerDatosAppsScript(action, params = {}) {
+        try {
+            // Construir la URL con parámetros de consulta para GET
+            const url = new URL(APPS_SCRIPT_URL);
+            url.searchParams.append('action', action);
+            for (const key in params) {
+                if (params.hasOwnProperty(key)) {
+                    url.searchParams.append(key, params[key]);
+                }
+            }
+
+            const response = await fetch(url, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                 const errorText = await response.text();
+                 throw new Error(`Error HTTP: ${response.status} - ${response.statusText}. Detalle: ${errorText}`);
+            }
+
+            const result = await response.json();
+
+             if (result.status === 'error') {
+                 throw new Error(`Error del Apps Script: ${result.message}`);
+             }
+
+            return result.data; // Asumimos que los datos vienen en la propiedad 'data' del JSON de respuesta
+
+        } catch (error) {
+            console.error('Error al obtener datos de Apps Script:', error);
+            mostrarMensaje(`Error al cargar datos: ${error.message}`, 'error');
+            throw error;
+        }
+    }
+
+
     // --- Funcionalidad de Clientes (en la vista principal) ---
-    function agregarCliente() {
+
+    async function agregarCliente() {
         const nombreInput = document.getElementById('nombre-cliente');
         const rfcInput = document.getElementById('rfc-cliente');
         const nombre = nombreInput.value.trim();
         const rfc = rfcInput.value.trim();
 
         if (nombre && rfc) {
-             // Inicializar datos para el año actual
-             const datosMensualesIniciales = meses.map(mes => ({ mes: mes, ingresos: 0, gastos: 0, impuestos: 0 }));
-             const declaracionesMensualesIniciales = meses.map(mes => ({ mes: mes, completada: false }));
-             const pagosMensualesIniciales = meses.map(mes => ({ mes: mes, pagado: false }));
+            try {
+                // Enviar datos del nuevo cliente al Apps Script
+                const result = await enviarDatosAppsScript('addClient', { nombre: nombre, rfc: rfc });
 
+                if (result.status === 'success') {
+                    mostrarMensaje('Cliente agregado con éxito.', 'success');
+                    nombreInput.value = '';
+                    rfcInput.value = '';
+                    await listarClientes(); // Volver a cargar la lista después de agregar
+                } else {
+                     // El error ya se maneja en enviarDatosAppsScript, pero puedes añadir lógica adicional aquí si es necesario
+                     mostrarMensaje(`Fallo al agregar cliente: ${result.message}`, 'error');
+                }
 
-            clientes.push({
-                id: Date.now(), // ID único simple
-                nombre: nombre,
-                rfc: rfc,
-                // Almacenar datos, declaraciones y pagos por año
-                datosPorAño: { [añoActual]: datosMensualesIniciales },
-                declaracionesPorAño: { [añoActual]: declaracionesMensualesIniciales },
-                pagosPorAño: { [añoActual]: pagosMensualesIniciales }
-            });
-            nombreInput.value = '';
-            rfcInput.value = '';
-            listarClientes();
-            guardarDatos(); // Guardar después de agregar
+            } catch (error) {
+                // El error ya se maneja en enviarDatosAppsScript
+            }
         } else {
-            alert('Por favor, completa el nombre y RFC del cliente.');
+            mostrarMensaje('Por favor, completa el nombre y RFC del cliente.', 'warning');
         }
     }
 
-    function listarClientes() {
+    async function listarClientes() {
         const listaClientesDiv = document.getElementById('lista-clientes');
         listaClientesDiv.innerHTML = ''; // Limpiar lista actual
-        clientes.forEach(cliente => {
-            const clienteElement = document.createElement('div');
-            clienteElement.classList.add('card', 'cursor-pointer');
-            clienteElement.innerHTML = `
-                <p class="font-semibold">${cliente.nombre}</p>
-                <p class="text-sm text-gray-600">RFC: ${cliente.rfc}</p>
-            `;
-            clienteElement.onclick = () => mostrarDetalleCliente(cliente.id); // Pasar el ID del cliente
-            listaClientesDiv.appendChild(clienteElement);
-        });
+
+        try {
+            // Obtener la lista de clientes desde el Apps Script
+            const clientesData = await obtenerDatosAppsScript('getClients');
+
+            // Actualizar el array local 'clientes' con los datos obtenidos
+            clientes = clientesData;
+
+            if (clientes.length === 0) {
+                 listaClientesDiv.innerHTML = '<p class="text-center text-gray-600 col-span-full">No hay clientes registrados.</p>';
+                 return;
+            }
+
+            // Renderizar la lista de clientes en la UI
+            clientes.forEach(cliente => {
+                const clienteElement = document.createElement('div');
+                clienteElement.classList.add('card', 'cursor-pointer');
+                // Asume que cada cliente del Apps Script tiene propiedades 'id', 'nombre', 'rfc'
+                clienteElement.innerHTML = `
+                    <p class="font-semibold">${cliente.nombre}</p>
+                    <p class="text-sm text-gray-600">RFC: ${cliente.rfc}</p>
+                `;
+                // Usar el ID proporcionado por el backend (Apps Script)
+                clienteElement.onclick = () => mostrarDetalleCliente(cliente.id);
+                listaClientesDiv.appendChild(clienteElement);
+            });
+
+        } catch (error) {
+            // El error ya se maneja en obtenerDatosAppsScript
+             listaClientesDiv.innerHTML = '<p class="text-center text-red-500 col-span-full">Error al cargar clientes.</p>';
+        }
     }
 
-     // --- Funcionalidad de Detalle de Cliente (en la nueva vista) ---
-     let clienteActualId = null; // Para saber qué cliente estamos viendo
-     let añoSeleccionado = añoActual; // Año por defecto
+    // --- Funcionalidad de Detalle de Cliente (en la nueva vista) ---
 
-    function mostrarDetalleCliente(clienteId) {
+    async function mostrarDetalleCliente(clienteId) {
+        // Buscar el cliente en el array local (ya cargado por listarClientes)
         const cliente = clientes.find(c => c.id === clienteId);
-        if (!cliente) return; // Salir si no se encuentra el cliente
+        if (!cliente) {
+            mostrarMensaje('Cliente no encontrado.', 'error');
+            return;
+        }
 
         clienteActualId = clienteId; // Guardar el ID del cliente actual
         añoSeleccionado = añoActual; // Resetear al año actual al abrir detalle
@@ -731,729 +840,651 @@
         document.getElementById('nombre-cliente-detalle').textContent = cliente.nombre;
         document.getElementById('rfc-cliente-detalle').textContent = cliente.rfc;
 
-        // Cargar opciones en los selectores de año
-        cargarSelectoresAño();
+        // Cargar opciones en los selectores de año en la vista de detalle
+        await cargarSelectoresAñoDetalle(clienteId);
 
         // Mostrar datos para el año seleccionado
-        mostrarDatosClientePorAño();
+        await mostrarDatosClientePorAño(); // Ahora es asíncrono
 
         // Cambiar a la vista de detalle de cliente
         mostrarVista('detalle-cliente');
     }
 
-    function cargarSelectoresAño() {
-        const yearSelectors = document.querySelectorAll('#detalle-cliente-view select[id^="year-selector"]');
-        const añosDisponibles = new Set();
+    // Carga los selectores de año en la vista de detalle con los años disponibles para el cliente
+    async function cargarSelectoresAñoDetalle(clienteId) {
+         const yearSelectors = document.querySelectorAll('#detalle-cliente-view select[id^="year-selector-"]');
+         yearSelectors.forEach(selector => selector.innerHTML = ''); // Limpiar selectores
 
-        // Obtener todos los años con datos para este cliente
-        const cliente = clientes.find(c => c.id === clienteActualId);
-        if (cliente) {
-            Object.keys(cliente.datosPorAño).forEach(año => añosDisponibles.add(parseInt(año)));
-            Object.keys(cliente.declaracionesPorAño).forEach(año => añosDisponibles.add(parseInt(año)));
-            Object.keys(cliente.pagosPorAño).forEach(año => añosDisponibles.add(parseInt(año)));
-        }
+         try {
+             // Obtener los años disponibles para este cliente desde el Apps Script
+             const añosDisponibles = await obtenerDatosAppsScript('getClientYears', { clientId: clienteId });
 
-        // Añadir el año actual si no está presente
-        añosDisponibles.add(añoActual);
+             if (añosDisponibles.length === 0) {
+                 // Si no hay años, añadir solo el año actual
+                 const option = document.createElement('option');
+                 option.value = añoActual;
+                 option.textContent = añoActual;
+                 yearSelectors.forEach(selector => selector.appendChild(option.cloneNode(true)));
+             } else {
+                 // Añadir los años disponibles y el año actual si no está
+                 const allYears = new Set([...añosDisponibles, añoActual]);
+                 Array.from(allYears).sort().forEach(year => {
+                     const option = document.createElement('option');
+                     option.value = year;
+                     option.textContent = year;
+                      yearSelectors.forEach(selector => selector.appendChild(option.cloneNode(true)));
+                 });
+             }
 
-        const añosOrdenados = Array.from(añosDisponibles).sort((a, b) => b - a); // Ordenar de más reciente a más antiguo
+             // Establecer el año seleccionado por defecto (añoActual)
+             yearSelectors.forEach(selector => selector.value = añoSeleccionado);
 
-        yearSelectors.forEach(selector => {
-            selector.innerHTML = ''; // Limpiar opciones actuales
-            añosOrdenados.forEach(año => {
-                const option = document.createElement('option');
-                option.value = año;
-                option.textContent = año;
-                selector.appendChild(option);
-            });
-            // Seleccionar el año actual por defecto
-            selector.value = añoSeleccionado;
-        });
+         } catch (error) {
+             // El error ya se maneja en obtenerDatosAppsScript
+              mostrarMensaje('Error al cargar años disponibles.', 'error');
+         }
     }
 
-    function mostrarDatosClientePorAño() {
-        const cliente = clientes.find(c => c.id === clienteActualId);
-        if (!cliente) return;
 
-        // Obtener el año seleccionado de cualquiera de los selectores (deberían estar sincronizados)
-        añoSeleccionado = parseInt(document.getElementById('year-selector-data').value);
+    async function mostrarDatosClientePorAño() {
+        if (!clienteActualId) return; // No hacer nada si no hay cliente seleccionado
 
-        // Obtener datos, declaraciones y pagos para el año seleccionado
-        const datosMensualesAño = cliente.datosPorAño[añoSeleccionado] || meses.map(mes => ({ mes: mes, ingresos: 0, gastos: 0, impuestos: 0 }));
-        const declaracionesMensualesAño = cliente.declaracionesPorAño[añoSeleccionado] || meses.map(mes => ({ mes: mes, completada: false }));
-        const pagosMensualesAño = cliente.pagosPorAño[añoSeleccionado] || meses.map(mes => ({ mes: mes, pagado: false }));
+        const yearSelectorData = document.getElementById('year-selector-data');
+        const yearSelectorDeclaraciones = document.getElementById('year-selector-declaraciones');
+        const yearSelectorPagos = document.getElementById('year-selector-pagos');
 
-        // Mostrar datos mensuales en la tabla (celdas editables)
-        const tablaDatosMensualesBody = document.getElementById('tabla-datos-mensuales');
-        tablaDatosMensualesBody.innerHTML = ''; // Limpiar tabla actual
-        let totalIngresos = 0;
-        let totalGastos = 0;
-        let totalImpuestos = 0;
+        // Sincronizar los selectores de año en la vista de detalle
+        const selectedYear = yearSelectorData.value || añoActual; // Usar el valor del selector de datos como principal
+        yearSelectorDeclaraciones.value = selectedYear;
+        yearSelectorPagos.value = selectedYear;
+        añoSeleccionado = parseInt(selectedYear); // Actualizar la variable global
 
-        datosMensualesAño.forEach(dato => {
-            const row = tablaDatosMensualesBody.insertRow();
-            row.innerHTML = `
-                <td>${dato.mes}</td>
-                <td contenteditable="true" data-mes="${dato.mes}" data-tipo="ingresos">${dato.ingresos.toFixed(2)}</td>
-                <td contenteditable="true" data-mes="${dato.mes}" data-tipo="gastos">${dato.gastos.toFixed(2)}</td>
-                <td contenteditable="true" data-mes="${dato.mes}" data-tipo="impuestos">${dato.impuestos.toFixed(2)}</td>
-            `;
-             totalIngresos += dato.ingresos;
-             totalGastos += dato.gastos;
-             totalImpuestos += dato.impuestos;
-        });
-
-         // Añadir event listeners a las celdas editables
-         tablaDatosMensualesBody.querySelectorAll('td[contenteditable="true"]').forEach(cell => {
-             cell.addEventListener('blur', handleMonthlyDataEdit); // Usar 'blur' para guardar cuando se sale de la celda
-             cell.addEventListener('keypress', function(event) {
-                 if (event.key === 'Enter') {
-                     event.preventDefault(); // Prevenir salto de línea
-                     cell.blur(); // Simular blur para guardar
-                 }
-             });
-         });
-
-
-         // Actualizar resumen financiero anual
-         document.getElementById('total-ingresos-cliente').textContent = totalIngresos.toFixed(2);
-         document.getElementById('total-gastos-cliente').textContent = totalGastos.toFixed(2);
-         document.getElementById('total-impuestos-cliente').textContent = totalImpuestos.toFixed(2);
-
-
-        // Mostrar estado de declaraciones mensuales
         document.getElementById('declaraciones-year-title').textContent = `(${añoSeleccionado})`;
-        const tablaDeclaracionesMensualesBody = document.getElementById('tabla-declaraciones-mensuales');
-        tablaDeclaracionesMensualesBody.innerHTML = ''; // Limpiar tabla actual
-        declaracionesMensualesAño.forEach(declaracion => {
-            const row = tablaDeclaracionesMensualesBody.insertRow();
-            row.innerHTML = `
-                <td>${declaracion.mes}</td>
-                <td>
-                    <input type="checkbox" ${declaracion.completada ? 'checked' : ''} onchange="marcarDeclaracionMensual('${declaracion.mes}', this.checked)">
-                </td>
-            `;
-        });
-
-        // Mostrar estado de pago mensual
         document.getElementById('pagos-year-title').textContent = `(${añoSeleccionado})`;
-        const tablaPagosMensualesBody = document.getElementById('tabla-pagos-mensuales');
-        tablaPagosMensualesBody.innerHTML = ''; // Limpiar tabla actual
-        pagosMensualesAño.forEach(pago => {
-            const row = tablaPagosMensualesBody.insertRow();
-            row.innerHTML = `
-                <td>${pago.mes}</td>
-                <td>
-                    <input type="checkbox" ${pago.pagado ? 'checked' : ''} onchange="marcarPagoMensual('${pago.mes}', this.checked)">
-                </td>
-            `;
-        });
 
-         // Sincronizar los selectores de año
-         const yearSelectors = document.querySelectorAll('#detalle-cliente-view select[id^="year-selector"]');
-         yearSelectors.forEach(selector => {
-             selector.value = añoSeleccionado;
-         });
+
+        const tablaDatosMensualesBody = document.getElementById('tabla-datos-mensuales');
+        const tablaDeclaracionesBody = document.getElementById('tabla-declaraciones-mensuales');
+        const tablaPagosBody = document.getElementById('tabla-pagos-mensuales');
+
+        tablaDatosMensualesBody.innerHTML = ''; // Limpiar tablas
+        tablaDeclaracionesBody.innerHTML = '';
+        tablaPagosBody.innerHTML = '';
+
+        try {
+            // Obtener todos los datos del cliente para el año seleccionado desde el Apps Script
+            const clienteDataAnual = await obtenerDatosAppsScript('getClientDataByYear', {
+                clientId: clienteActualId,
+                year: añoSeleccionado
+            });
+
+            // clienteDataAnual debería contener arrays para datosMensuales, declaracionesMensuales, pagosMensuales
+            const datosMensuales = clienteDataAnual.datosMensuales || meses.map(mes => ({ mes: mes, ingresos: 0, gastos: 0, impuestos: 0 }));
+            const declaracionesMensuales = clienteDataAnual.declaracionesMensuales || meses.map(mes => ({ mes: mes, completada: false }));
+            const pagosMensuales = clienteDataAnual.pagosMensuales || meses.map(mes => ({ mes: mes, pagado: false }));
+
+
+            // Llenar tabla de Datos Mensuales
+            datosMensuales.forEach((item, index) => {
+                const row = tablaDatosMensualesBody.insertRow();
+                row.innerHTML = `
+                    <td>${item.mes}</td>
+                    <td contenteditable="true" data-mes="${item.mes}" data-tipo="ingresos">${item.ingresos}</td>
+                    <td contenteditable="true" data-mes="${item.mes}" data-tipo="gastos">${item.gastos}</td>
+                    <td contenteditable="true" data-mes="${item.mes}" data-tipo="impuestos">${item.impuestos}</td>
+                `;
+                 // Añadir event listeners para guardar cambios al editar
+                 row.querySelectorAll('td[contenteditable="true"]').forEach(cell => {
+                     cell.addEventListener('blur', handleDataEdit);
+                 });
+            });
+
+            // Llenar tabla de Declaraciones
+            declaracionesMensuales.forEach((item, index) => {
+                 const row = tablaDeclaracionesBody.insertRow();
+                 row.innerHTML = `
+                     <td>${item.mes}</td>
+                     <td>
+                         <input type="checkbox" data-mes="${item.mes}" data-tipo="declaracion" ${item.completada ? 'checked' : ''}>
+                     </td>
+                 `;
+                 row.querySelector('input[type="checkbox"]').addEventListener('change', handleCheckboxChange);
+            });
+
+             // Llenar tabla de Pagos
+            pagosMensuales.forEach((item, index) => {
+                 const row = tablaPagosBody.insertRow();
+                 row.innerHTML = `
+                     <td>${item.mes}</td>
+                     <td>
+                         <input type="checkbox" data-mes="${item.mes}" data-tipo="pago" ${item.pagado ? 'checked' : ''}>
+                     </td>
+                 `;
+                 row.querySelector('input[type="checkbox"]').addEventListener('change', handleCheckboxChange);
+            });
+
+             // Calcular y mostrar totales anuales (esto se haría con los datos obtenidos)
+             const totalIngresos = datosMensuales.reduce((sum, item) => sum + parseFloat(item.ingresos || 0), 0);
+             const totalGastos = datosMensuales.reduce((sum, item) => sum + parseFloat(item.gastos || 0), 0);
+             const totalImpuestos = datosMensuales.reduce((sum, item) => sum + parseFloat(item.impuestos || 0), 0);
+
+             document.getElementById('total-ingresos-cliente').textContent = totalIngresos.toFixed(2);
+             document.getElementById('total-gastos-cliente').textContent = totalGastos.toFixed(2);
+             document.getElementById('total-impuestos-cliente').textContent = totalImpuestos.toFixed(2);
+
+
+        } catch (error) {
+            // El error ya se maneja en obtenerDatosAppsScript
+             tablaDatosMensualesBody.innerHTML = '<tr><td colspan="4" class="text-center text-red-500">Error al cargar datos mensuales.</td></tr>';
+             tablaDeclaracionesBody.innerHTML = '<tr><td colspan="2" class="text-center text-red-500">Error al cargar declaraciones.</td></tr>';
+             tablaPagosBody.innerHTML = '<tr><td colspan="2" class="text-center text-red-500">Error al cargar pagos.</td></tr>';
+        }
     }
 
-    // Función para manejar la edición directa en la tabla de datos mensuales
-    function handleMonthlyDataEdit(event) {
+    // Manejar la edición de celdas de datos mensuales (Ingresos, Gastos, Impuestos)
+    async function handleDataEdit(event) {
         const cell = event.target;
         const mes = cell.dataset.mes;
         const tipo = cell.dataset.tipo; // 'ingresos', 'gastos', 'impuestos'
-        let valor = parseFloat(cell.textContent) || 0; // Convertir a número, default 0 si no es válido
+        const valor = parseFloat(cell.textContent) || 0; // Convertir a número, default 0 si no es válido
 
-        // Opcional: Formatear el valor mostrado después de la edición
-        cell.textContent = valor.toFixed(2);
+        if (!clienteActualId || !mes || !tipo) return;
 
-        const cliente = clientes.find(c => c.id === clienteActualId);
-        if (!cliente) return;
+        try {
+            // Enviar la actualización al Apps Script
+            const result = await enviarDatosAppsScript('updateMonthlyData', {
+                clientId: clienteActualId,
+                year: añoSeleccionado,
+                month: mes,
+                type: tipo, // 'ingresos', 'gastos', 'impuestos'
+                value: valor
+            });
 
-        const añoSeleccionadoDatos = parseInt(document.getElementById('year-selector-data').value);
+            if (result.status === 'success') {
+                mostrarMensaje(`Datos de ${tipo} para ${mes} actualizados.`, 'success');
+                // Opcional: Volver a cargar los datos del año para actualizar totales y gráficos si están visibles
+                 await mostrarDatosClientePorAño();
+                 // Si estás en la pestaña de gráficos y este cliente está seleccionado, actualiza los gráficos
+                 const clienteSelectorGraficos = document.getElementById('cliente-selector-graficos');
+                 if (document.getElementById('graficos').classList.contains('active') && clienteSelectorGraficos.value == clienteActualId) {
+                     mostrarGraficosCliente(); // Esto recargará los gráficos
+                 }
 
-        // Asegurar que el objeto para el año seleccionado exista
-        if (!cliente.datosPorAño[añoSeleccionadoDatos]) {
-             cliente.datosPorAño[añoSeleccionadoDatos] = meses.map(mes => ({ mes: mes, ingresos: 0, gastos: 0, impuestos: 0 }));
-         }
-
-        // Encontrar y actualizar el dato mensual para el año y mes correctos
-        const datoMes = cliente.datosPorAño[añoSeleccionadoDatos].find(d => d.mes === mes);
-        if (datoMes) {
-            datoMes[tipo] = valor; // Actualizar la propiedad correcta (ingresos, gastos o impuestos)
-        } else {
-             // Esto no debería ocurrir si inicializamos todos los meses, pero como fallback
-             console.error(`Dato para el mes ${mes} no encontrado para el año ${añoSeleccionadoDatos}`);
-             return;
+            } else {
+                 mostrarMensaje(`Fallo al actualizar datos de ${tipo}: ${result.message}`, 'error');
+                 // Opcional: Revertir el contenido de la celda a su valor anterior si falla
+            }
+        } catch (error) {
+             mostrarMensaje(`Error al guardar datos de ${tipo}: ${error.message}`, 'error');
+             // Opcional: Revertir el contenido de la celda a su valor anterior si falla
         }
-
-        // Actualizar el resumen financiero anual en la vista de detalle
-        let totalIngresos = 0;
-        let totalGastos = 0;
-        let totalImpuestos = 0;
-         cliente.datosPorAño[añoSeleccionadoDatos].forEach(dato => {
-             totalIngresos += dato.ingresos;
-             totalGastos += dato.gastos;
-             totalImpuestos += dato.impuestos;
-         });
-         document.getElementById('total-ingresos-cliente').textContent = totalIngresos.toFixed(2);
-         document.getElementById('total-gastos-cliente').textContent = totalGastos.toFixed(2);
-         document.getElementById('total-impuestos-cliente').textContent = totalImpuestos.toFixed(2);
-
-
-        actualizarResumenInicio(); // Actualizar listas pendientes en inicio
-        guardarDatos(); // Guardar después de modificar datos mensuales
     }
 
+    // Manejar el cambio en los checkboxes de Declaraciones y Pagos
+    async function handleCheckboxChange(event) {
+        const checkbox = event.target;
+        const mes = checkbox.dataset.mes;
+        const tipo = checkbox.dataset.tipo; // 'declaracion' o 'pago'
+        const estado = checkbox.checked; // true o false
 
-     function marcarDeclaracionMensual(mes, completada) {
-         const cliente = clientes.find(c => c.id === clienteActualId);
-         if (!cliente) return;
+        if (!clienteActualId || !mes || !tipo) return;
 
-         const añoSeleccionadoDeclaraciones = parseInt(document.getElementById('year-selector-declaraciones').value); // Usar el selector de declaraciones
+        try {
+            // Enviar la actualización al Apps Script
+            const result = await enviarDatosAppsScript('updateStatus', {
+                clientId: clienteActualId,
+                year: añoSeleccionado,
+                month: mes,
+                type: tipo, // 'declaracion' o 'pago'
+                status: estado
+            });
 
-          // Asegurar que el objeto para el año seleccionado exista
-         if (!cliente.declaracionesPorAño[añoSeleccionadoDeclaraciones]) {
-             cliente.declaracionesPorAño[añoSeleccionadoDeclaraciones] = meses.map(mes => ({ mes: mes, completada: false }));
-         }
+             if (result.status === 'success') {
+                 mostrarMensaje(`${tipo === 'declaracion' ? 'Declaración' : 'Pago'} de ${mes} actualizado.`, 'success');
+                 // Opcional: Actualizar resumen en la pestaña de inicio si es necesario
+                  if (document.getElementById('inicio').classList.contains('active')) {
+                      actualizarResumenInicio();
+                  }
+             } else {
+                  mostrarMensaje(`Fallo al actualizar estado de ${tipo}: ${result.message}`, 'error');
+                 // Opcional: Revertir el estado del checkbox si falla
+                  checkbox.checked = !estado;
+             }
 
-         const declaracionMes = cliente.declaracionesPorAño[añoSeleccionadoDeclaraciones].find(d => d.mes === mes);
-         if (declaracionMes) {
-             declaracionMes.completada = completada;
-             // No es necesario volver a mostrar el detalle, la UI se actualiza con el checkbox
-             actualizarResumenInicio(); // Actualizar lista de pendientes en inicio
-             guardarDatos(); // Guardar después de marcar declaración
-         }
-     }
-
-     function marcarPagoMensual(mes, pagado) {
-         const cliente = clientes.find(c => c.id === clienteActualId);
-         if (!cliente) return;
-
-         const añoSeleccionadoPagos = parseInt(document.getElementById('year-selector-pagos').value); // Usar el selector de pagos
-
-         // Asegurar que el objeto para el año seleccionado exista
-         if (!cliente.pagosPorAño[añoSeleccionadoPagos]) {
-             cliente.pagosPorAño[añoSeleccionadoPagos] = meses.map(mes => ({ mes: mes, pagado: false }));
-         }
-
-         const pagoMes = cliente.pagosPorAño[añoSeleccionadoPagos].find(p => p.mes === mes);
-         if (pagoMes) {
-             pagoMes.pagado = pagado;
-             // No es necesario volver a mostrar el detalle, la UI se actualiza con el checkbox
-             actualizarResumenInicio(); // Actualizar lista de pagos en inicio
-             guardarDatos(); // Guardar después de marcar pago
-         }
-     }
+        } catch (error) {
+             mostrarMensaje(`Error al guardar estado de ${tipo}: ${error.message}`, 'error');
+             // Opcional: Revertir el estado del checkbox si falla
+             checkbox.checked = !estado;
+        }
+    }
 
 
     function cerrarDetalleCliente() {
         clienteActualId = null; // Limpiar el cliente actual
         mostrarVista('main'); // Volver a la vista principal
-        openTab(null, 'clientes'); // Mostrar la pestaña de clientes
+        // Opcional: Volver a la pestaña de clientes
+         openTab(null, 'clientes');
     }
 
     // --- Funcionalidad de Edición de Cliente (Modal) ---
-    function abrirModalEditarCliente() {
-        const cliente = clientes.find(c => c.id === clienteActualId);
-        if (!cliente) return;
 
-        document.getElementById('edit-nombre-cliente').value = cliente.nombre;
-        document.getElementById('edit-rfc-cliente').value = cliente.rfc;
+    let clienteEditando = null; // Para saber qué cliente se está editando en el modal
+
+    async function abrirModalEditarCliente() {
+        if (!clienteActualId) return;
+
+        // Buscar el cliente en el array local
+        clienteEditando = clientes.find(c => c.id === clienteActualId);
+        if (!clienteEditando) {
+            mostrarMensaje('Cliente no encontrado para editar.', 'error');
+            return;
+        }
+
+        // Llenar el modal con los datos actuales del cliente
+        document.getElementById('edit-nombre-cliente').value = clienteEditando.nombre;
+        document.getElementById('edit-rfc-cliente').value = clienteEditando.rfc;
+
+        // Mostrar el modal
         document.getElementById('modalEditarCliente').style.display = 'flex'; // Usar flex para centrar
     }
 
     function cerrarModalEditarCliente() {
         document.getElementById('modalEditarCliente').style.display = 'none';
+        clienteEditando = null; // Limpiar el cliente en edición
     }
 
-    function guardarEdicionCliente() {
-        const cliente = clientes.find(c => c.id === clienteActualId);
-        if (!cliente) return;
+    async function guardarEdicionCliente() {
+        if (!clienteEditando) return;
 
         const nuevoNombre = document.getElementById('edit-nombre-cliente').value.trim();
         const nuevoRfc = document.getElementById('edit-rfc-cliente').value.trim();
 
         if (nuevoNombre && nuevoRfc) {
-            cliente.nombre = nuevoNombre;
-            cliente.rfc = nuevoRfc;
-            mostrarDetalleCliente(clienteActualId); // Actualizar la vista de detalle
-            listarClientes(); // Actualizar la lista de clientes en la pestaña Clientes
-            actualizarResumenInicio(); // Por si el nombre aparece en el resumen
-            guardarDatos(); // Guardar después de editar cliente
-            cerrarModalEditarCliente();
-        } else {
-            alert('El nombre y RFC no pueden estar vacíos.');
-        }
-    }
+            try {
+                // Enviar la actualización al Apps Script
+                const result = await enviarDatosAppsScript('updateClient', {
+                    clientId: clienteEditando.id,
+                    nombre: nuevoNombre,
+                    rfc: nuevoRfc
+                });
 
-     // Cerrar modal si se hace clic fuera del contenido
-     window.onclick = function(event) {
-         const modal = document.getElementById('modalEditarCliente');
-         if (event.target === modal) {
-             cerrarModalEditarCliente();
-         }
-     }
-
-
-    // --- Funcionalidad de Inicio/Resumen (actualizada con filtro por mes y año) ---
-    function actualizarResumenInicio() {
-        const hoy = new Date();
-        const mesActualIndex = hoy.getMonth(); // 0 para Enero, 11 para Diciembre
-        const añoActual = hoy.getFullYear();
-
-        // Meses a revisar: de Enero del año actual hasta el mes anterior al actual
-        const mesesARevisar = [];
-        for (let i = 0; i < mesActualIndex; i++) {
-            mesesARevisar.push(meses[i]);
-        }
-
-        // Actualizar lista de declaraciones pendientes (de todos los clientes, filtrado por mes y año)
-        const listaPendientesUl = document.getElementById('lista-pendientes');
-        listaPendientesUl.innerHTML = ''; // Limpiar lista actual
-
-        const pendientesFiltradas = [];
-        clientes.forEach(cliente => {
-             // Obtener declaraciones del año actual
-             const declaracionesAñoActual = cliente.declaracionesPorAño[añoActual] || [];
-            declaracionesAñoActual.forEach(declaracion => {
-                 const esMesARevisar = mesesARevisar.includes(declaracion.mes);
-                if (!declaracion.completada && esMesARevisar) {
-                    pendientesFiltradas.push(`${cliente.nombre} - Declaración ${declaracion.mes} ${añoActual}`);
+                if (result.status === 'success') {
+                    mostrarMensaje('Cliente actualizado con éxito.', 'success');
+                    // Actualizar el cliente en el array local
+                    clienteEditando.nombre = nuevoNombre;
+                    clienteEditando.rfc = nuevoRfc;
+                    // Actualizar la UI de detalle
+                    document.getElementById('nombre-cliente-detalle').textContent = nuevoNombre;
+                    document.getElementById('rfc-cliente-detalle').textContent = nuevoRfc;
+                    cerrarModalEditarCliente();
+                    await listarClientes(); // Volver a cargar la lista principal para reflejar el cambio
+                } else {
+                     mostrarMensaje(`Fallo al actualizar cliente: ${result.message}`, 'error');
                 }
-            });
-        });
 
-        if (pendientesFiltradas.length > 0) {
-             pendientesFiltradas.forEach(pendiente => {
-                const li = document.createElement('li');
-                li.textContent = pendiente;
-                li.classList.add('mb-1');
-                listaPendientesUl.appendChild(li);
-            });
+            } catch (error) {
+                 mostrarMensaje(`Error al guardar edición del cliente: ${error.message}`, 'error');
+            }
         } else {
-            listaPendientesUl.innerHTML = '<li>No hay declaraciones pendientes en los meses anteriores del año actual.</li>';
-        }
-
-
-        // Actualizar lista de pagos pendientes (de todos los clientes, filtrado por mes y año)
-        const listaPagosUl = document.getElementById('lista-pagos');
-        listaPagosUl.innerHTML = ''; // Limpiar lista actual
-
-        const pagosPendientesFiltrados = [];
-         clientes.forEach(cliente => {
-             // Obtener pagos del año actual
-             const pagosAñoActual = cliente.pagosPorAño[añoActual] || [];
-            pagosAñoActual.forEach(pago => {
-                 const esMesARevisar = mesesARevisar.includes(pago.mes);
-                 if (!pago.pagado && esMesARevisar) {
-                     pagosPendientesFiltrados.push(`${cliente.nombre} - Pago ${pago.mes} ${añoActual}`);
-                 }
-            });
-         });
-
-
-        if (pagosPendientesFiltrados.length > 0) {
-            pagosPendientesFiltrados.forEach(pendiente => {
-                const li = document.createElement('li');
-                li.classList.add('flex', 'justify-between', 'items-center', 'mb-1');
-                li.innerHTML = `
-                    <span>${pendiente}</span>
-                    `;
-                listaPagosUl.appendChild(li);
-            });
-        } else {
-             listaPagosUl.innerHTML = '<li>No hay pagos pendientes en los meses anteriores del año actual.</li>';
+            mostrarMensaje('El nombre y RFC no pueden estar vacíos.', 'warning');
         }
     }
+
+    // Cerrar modal haciendo clic fuera de él
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalEditarCliente');
+        if (event.target === modal) {
+            cerrarModalEditarCliente();
+        }
+    }
+
+
+    // --- Funcionalidad de Resumen en Inicio ---
+
+    async function actualizarResumenInicio() {
+        const listaPendientesUl = document.getElementById('lista-pendientes');
+        const listaPagosUl = document.getElementById('lista-pagos');
+
+        listaPendientesUl.innerHTML = ''; // Limpiar listas
+        listaPagosUl.innerHTML = '';
+
+        try {
+            // Obtener el resumen de pendientes desde el Apps Script
+            const resumenPendientes = await obtenerDatosAppsScript('getPendingSummary');
+
+            if (resumenPendientes.declaraciones.length === 0) {
+                 listaPendientesUl.innerHTML = '<li>No hay declaraciones pendientes.</li>';
+            } else {
+                resumenPendientes.declaraciones.forEach(item => {
+                    // Asume que item tiene propiedades como clienteNombre, mes, año
+                     listaPendientesUl.innerHTML += `<li>${item.clienteNombre} - Declaración ${item.mes} ${item.año}</li>`;
+                });
+            }
+
+             if (resumenPendientes.pagos.length === 0) {
+                 listaPagosUl.innerHTML = '<li>No hay pagos pendientes.</li>';
+            } else {
+                resumenPendientes.pagos.forEach(item => {
+                    // Asume que item tiene propiedades como clienteNombre, mes, año
+                     listaPagosUl.innerHTML += `<li>${item.clienteNombre} - Pago ${item.mes} ${item.año}</li>`;
+                });
+            }
+
+        } catch (error) {
+            // El error ya se maneja en obtenerDatosAppsScript
+             listaPendientesUl.innerHTML = '<li>Error al cargar declaraciones pendientes.</li>';
+             listaPagosUl.innerHTML = '<li>Error al cargar pagos pendientes.</li>';
+        }
+    }
+
 
     // --- Funcionalidad de Gráficos ---
-    function cargarClientesEnSelectorGraficos() {
-        const selector = document.getElementById('cliente-selector-graficos');
-        selector.innerHTML = '<option value="">-- Selecciona un cliente --</option>'; // Limpiar y añadir opción por defecto
 
-        clientes.forEach(cliente => {
-            const option = document.createElement('option');
-            option.value = cliente.id;
-            option.textContent = cliente.nombre;
-            selector.appendChild(option);
-        });
+    // Carga los clientes en el selector de la pestaña de gráficos
+    async function cargarClientesEnSelectorGraficos() {
+         const clienteSelector = document.getElementById('cliente-selector-graficos');
+         clienteSelector.innerHTML = '<option value="">-- Selecciona un cliente --</option>'; // Opción por defecto
 
-         // Cargar opciones de año en el selector de la gráfica de pastel
-         cargarSelectoresAñoPie();
+         try {
+             // Obtener la lista de clientes (si no está ya cargada)
+             if (clientes.length === 0) {
+                  const clientesData = await obtenerDatosAppsScript('getClients');
+                  clientes = clientesData; // Actualizar el array local
+             }
+
+
+             clientes.forEach(cliente => {
+                 const option = document.createElement('option');
+                 option.value = cliente.id; // Usar el ID del cliente
+                 option.textContent = cliente.nombre;
+                 clienteSelector.appendChild(option);
+             });
+
+         } catch (error) {
+             // El error ya se maneja en obtenerDatosAppsScript
+             mostrarMensaje('Error al cargar clientes para gráficos.', 'error');
+         }
     }
 
-     function cargarSelectoresAñoPie() {
-         const yearSelectorPie = document.getElementById('year-selector-pie');
-         const añosDisponibles = new Set();
-
-         // Obtener todos los años con datos de todos los clientes
-         clientes.forEach(cliente => {
-             Object.keys(cliente.datosPorAño).forEach(año => añosDisponibles.add(parseInt(año)));
-         });
-
-         // Añadir el año actual si no está presente
-         añosDisponibles.add(añoActual);
-
-         const añosOrdenados = Array.from(añosDisponibles).sort((a, b) => b - a); // Ordenar de más reciente a más antiguo
-
-         yearSelectorPie.innerHTML = ''; // Limpiar opciones actuales
-         añosOrdenados.forEach(año => {
-             const option = document.createElement('option');
-             option.value = año;
-             option.textContent = año;
-             yearSelectorPie.appendChild(option);
-         });
-         // Seleccionar el año actual por defecto
-         yearSelectorPie.value = añoActual;
-     }
-
-
-    function mostrarGraficosCliente() {
-        const selector = document.getElementById('cliente-selector-graficos');
-        const clienteId = parseInt(selector.value);
+    // Muestra los gráficos para el cliente seleccionado
+    async function mostrarGraficosCliente() {
+        const clienteSelector = document.getElementById('cliente-selector-graficos');
+        const clienteId = clienteSelector.value;
         const graficosArea = document.getElementById('graficos-area');
         const noClienteSelected = document.getElementById('no-cliente-selected');
         const mensajePersonalizado = document.getElementById('mensaje-personalizado-graficos');
 
-        // Destruir gráficos existentes antes de crear nuevos
+        // Destruir gráficos existentes si los hay
         if (graficoAnualChart) {
             graficoAnualChart.destroy();
             graficoAnualChart = null;
         }
-        if (graficoMensualPieChart) { // Destruir gráfico de pastel
-            graficoMensualPieChart.destroy();
-            graficoMensualPieChart = null;
-        }
+         if (graficoMensualPieChart) {
+             graficoMensualPieChart.destroy();
+             graficoMensualPieChart = null;
+         }
 
 
-        if (clienteId) {
-            const cliente = clientes.find(c => c.id === clienteId);
-            if (cliente) {
-                // Mostrar el área de gráficos y ocultar el mensaje de no seleccionado
-                graficosArea.style.display = 'block';
-                noClienteSelected.style.display = 'none';
-
-                // Mostrar mensaje personalizado
-                mensajePersonalizado.textContent = `Este es tu resumen financiero para ${cliente.nombre}:`;
-
-                // --- Generar Gráfico Anual (usando datos mensuales como línea) ---
-                const ctxAnual = document.getElementById('graficoAnual').getContext('2d');
-                // Para el gráfico anual, vamos a mostrar la evolución mensual del año actual por defecto
-                const datosMensualesAñoActual = cliente.datosPorAño[añoActual] || [];
-                 graficoAnualChart = new Chart(ctxAnual, {
-                     type: 'line', // Cambiado a línea para mostrar evolución mensual
-                     data: obtenerDatosMensualesParaGrafico(datosMensualesAñoActual), // Usar la función de datos mensuales
-                     options: {
-                         responsive: true,
-                         maintainAspectRatio: false,
-                         scales: {
-                             y: {
-                                 beginAtZero: true
-                             }
-                         },
-                         plugins: {
-                             title: {
-                                 display: true,
-                                 text: `Evolución Mensual (${añoActual})`,
-                                 color: 'white' // Título blanco
-                             },
-                             legend: {
-                                 labels: {
-                                     color: '#eee' // Leyenda blanca
-                                 }
-                             }
-                         }
-                     }
-                 });
-
-                // Cargar selectores de mes y año para la gráfica de pastel
-                 cargarSelectoresAñoPie();
-                 // Mostrar la gráfica de pastel inicial (puede ser del primer mes o el actual)
-                 updateMonthlyPieChart();
-
-
-            }
-        } else {
-            // Ocultar el área de gráficos y mostrar el mensaje de no seleccionado
+        if (!clienteId) {
             graficosArea.style.display = 'none';
             noClienteSelected.style.display = 'block';
+            mensajePersonalizado.textContent = '';
+            return;
+        }
+
+        // Buscar el cliente en el array local
+        const cliente = clientes.find(c => c.id == clienteId); // Usar == para comparar string/number si es necesario
+        if (!cliente) {
+             mostrarMensaje('Cliente no encontrado para gráficos.', 'error');
+             graficosArea.style.display = 'none';
+             noClienteSelected.style.display = 'block';
+             mensajePersonalizado.textContent = '';
+             return;
+        }
+
+        // Cargar selectores de mes y año para la gráfica mensual
+         cargarSelectoresMesAñoGraficos();
+
+
+        // Mostrar el área de gráficos y ocultar el mensaje de "selecciona cliente"
+        noClienteSelected.style.display = 'none';
+        graficosArea.style.display = 'block';
+        mensajePersonalizado.textContent = `Gráficos para ${cliente.nombre}`;
+
+
+        try {
+            // Obtener todos los datos anuales del cliente para la gráfica de evolución
+            const datosAnualesEvolucion = await obtenerDatosAppsScript('getClientAnnualEvolution', {
+                clientId: clienteId
+            });
+
+            // Asume que datosAnualesEvolucion es un objeto con arrays: { meses: [], ingresos: [], gastos: [], impuestos: [] }
+            const etiquetasMeses = datosAnualesEvolucion.meses || meses; // Usar meses por defecto si no vienen
+            const ingresosData = datosAnualesEvolucion.ingresos || Array(12).fill(0);
+            const gastosData = datosAnualesEvolucion.gastos || Array(12).fill(0);
+            const impuestosData = datosAnualesEvolucion.impuestos || Array(12).fill(0);
+
+
+            // Crear Gráfico Anual (Evolución Mensual)
+            const ctxAnual = document.getElementById('graficoAnual').getContext('2d');
+            graficoAnualChart = new Chart(ctxAnual, {
+                type: 'line',
+                data: {
+                    labels: etiquetasMeses, // Enero a Diciembre
+                    datasets: [{
+                        label: 'Ingresos',
+                        data: ingresosData, // Datos de ingresos por mes
+                        borderColor: '#4CAF50', // Verde
+                        tension: 0.1,
+                        fill: false
+                    }, {
+                        label: 'Gastos',
+                        data: gastosData, // Datos de gastos por mes
+                        borderColor: '#F44336', // Rojo
+                        tension: 0.1,
+                        fill: false
+                    }, {
+                        label: 'Impuestos',
+                        data: impuestosData, // Datos de impuestos por mes
+                        borderColor: '#2196F3', // Azul
+                        tension: 0.1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Permitir que el contenedor controle el tamaño
+                     plugins: {
+                         legend: {
+                             labels: {
+                                 color: '#ccc' // Color de la leyenda
+                             }
+                         }
+                     },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Mes',
+                                color: '#ccc'
+                            },
+                             ticks: {
+                                 color: '#eee' // Color de las etiquetas del eje X
+                             },
+                             grid: {
+                                 color: 'rgba(255,255,255,0.1)' // Color de las líneas de la cuadrícula
+                             }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Monto ($)',
+                                color: '#ccc'
+                            },
+                             ticks: {
+                                 color: '#eee' // Color de las etiquetas del eje Y
+                             },
+                             grid: {
+                                 color: 'rgba(255,255,255,0.1)' // Color de las líneas de la cuadrícula
+                             }
+                        }
+                    }
+                }
+            });
+
+            // Inicializar la gráfica de pastel con el mes y año seleccionados por defecto
+             updateMonthlyPieChart();
+
+
+        } catch (error) {
+             // El error ya se maneja en obtenerDatosAppsScript
+             mensajePersonalizado.textContent = `Error al cargar gráficos para ${cliente.nombre}.`;
+             graficosArea.style.display = 'block'; // Mostrar el área para mostrar el mensaje de error
+             noClienteSelected.style.display = 'none';
         }
     }
 
-    // Función para actualizar la gráfica de pastel mensual
-    function updateMonthlyPieChart() {
-        const cliente = clientes.find(c => c.id === parseInt(document.getElementById('cliente-selector-graficos').value));
-        if (!cliente) return;
+    // Carga los selectores de mes y año para la gráfica de pastel
+    function cargarSelectoresMesAñoGraficos() {
+        const monthSelector = document.getElementById('month-selector-pie');
+        const yearSelector = document.getElementById('year-selector-pie');
 
-        const mesSeleccionado = document.getElementById('month-selector-pie').value;
-        const añoSeleccionado = parseInt(document.getElementById('year-selector-pie').value);
+        // Limpiar selectores
+        monthSelector.innerHTML = '';
+        yearSelector.innerHTML = '';
 
-        // Destruir gráfico de pastel existente antes de crear uno nuevo
+        // Llenar selector de meses (siempre los 12 meses)
+        meses.forEach(mes => {
+            const option = document.createElement('option');
+            option.value = mes;
+            option.textContent = mes;
+            monthSelector.appendChild(option);
+        });
+
+        // Llenar selector de años (añadir años desde el año actual - 5 hasta el año actual + 1, por ejemplo)
+        const startYear = añoActual - 5;
+        const endYear = añoActual + 1;
+        for (let year = startYear; year <= endYear; year++) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            yearSelector.appendChild(option);
+        }
+
+        // Seleccionar el mes y año actual por defecto
+        monthSelector.value = meses[new Date().getMonth()]; // Mes actual
+        yearSelector.value = añoActual;
+    }
+
+
+    // Actualiza la gráfica de pastel mensual
+    async function updateMonthlyPieChart() {
+        const clienteSelector = document.getElementById('cliente-selector-graficos');
+        const clienteId = clienteSelector.value;
+        const monthSelector = document.getElementById('month-selector-pie');
+        const yearSelector = document.getElementById('year-selector-pie');
+        const legendDiv = document.getElementById('pie-chart-legend');
+
+        if (!clienteId) return; // No hacer nada si no hay cliente seleccionado
+
+        const selectedMonth = monthSelector.value;
+        const selectedYear = parseInt(yearSelector.value);
+
+        // Destruir gráfico de pastel existente si lo hay
         if (graficoMensualPieChart) {
             graficoMensualPieChart.destroy();
             graficoMensualPieChart = null;
         }
+        legendDiv.innerHTML = ''; // Limpiar leyenda
 
-        const datosMesAño = (cliente.datosPorAño[añoSeleccionado] || []).find(d => d.mes === mesSeleccionado);
+        try {
+            // Obtener los datos del mes y año seleccionados para la gráfica de pastel
+            const datosMensuales = await obtenerDatosAppsScript('getClientMonthlyData', {
+                clientId: clienteId,
+                year: selectedYear,
+                month: selectedMonth
+            });
 
-        const ctxPie = document.getElementById('graficoMensualPie').getContext('2d');
-        const legendContainer = document.getElementById('pie-chart-legend');
-        legendContainer.innerHTML = ''; // Limpiar leyenda anterior
+            // Asume que datosMensuales es un objeto: { ingresos: N, gastos: N, impuestos: N }
+            const ingresos = datosMensuales.ingresos || 0;
+            const gastos = datosMensuales.gastos || 0;
+            const impuestos = datosMensuales.impuestos || 0;
 
-        if (datosMesAño) {
-            const datosParaPie = obtenerDatosParaGraficaPastel(datosMesAño);
+            const data = {
+                labels: ['Ingresos', 'Gastos', 'Impuestos'],
+                datasets: [{
+                    data: [ingresos, gastos, impuestos],
+                    backgroundColor: [
+                        '#4CAF50', // Verde
+                        '#F44336', // Rojo
+                        '#2196F3'  // Azul
+                    ],
+                    borderColor: '#333', // Borde oscuro
+                    borderWidth: 1
+                }]
+            };
 
-            graficoMensualPieChart = new Chart(ctxPie, {
+             // Crear Gráfico Mensual (Pastel)
+            const ctxMensual = document.getElementById('graficoMensualPie').getContext('2d');
+            graficoMensualPieChart = new Chart(ctxMensual, {
                 type: 'pie',
-                data: datosParaPie,
+                data: data,
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false // Ocultar leyenda por defecto de Chart.js
+                            display: false // Ocultar la leyenda por defecto de Chart.js
                         },
-                        title: {
-                            display: true,
-                            text: `Desglose de ${mesSeleccionado} ${añoSeleccionado}`,
-                            color: 'white' // Título blanco
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(context.parsed);
+                                    }
+                                    return label;
+                                }
+                            }
                         }
                     }
                 }
             });
 
             // Generar leyenda personalizada
-            const total = datosMesAño.ingresos + datosMesAño.gastos + datosMesAño.impuestos;
-            const legendData = [
-                { label: 'Ingresos', value: datosMesAño.ingresos, color: datosParaPie.datasets[0].backgroundColor[0] },
-                { label: 'Gastos', value: datosMesAño.gastos, color: datosParaPie.datasets[0].backgroundColor[1] },
-                { label: 'Impuestos', value: datosMesAño.impuestos, color: datosParaPie.datasets[0].backgroundColor[2] }
-            ];
+             const backgroundColors = graficoMensualPieChart.data.datasets[0].backgroundColor;
+             data.labels.forEach((label, index) => {
+                 const legendItem = document.createElement('div');
+                 legendItem.classList.add('pie-chart-legend-item');
+                 legendItem.innerHTML = `
+                     <span class="pie-chart-legend-color" style="background-color: ${backgroundColors[index]}"></span>
+                     ${label}: ${new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(data.datasets[0].data[index])}
+                 `;
+                 legendDiv.appendChild(legendItem);
+             });
 
-            legendData.forEach(item => {
-                const legendItem = document.createElement('div');
-                legendItem.classList.add('pie-chart-legend-item');
-                legendItem.innerHTML = `
-                    <div class="pie-chart-legend-color" style="background-color: ${item.color}"></div>
-                    <span>${item.label}: $${item.value.toFixed(2)} (${total > 0 ? (item.value / total * 100).toFixed(1) : 0}%)</span>
-                `;
-                legendContainer.appendChild(legendItem);
-            });
 
-        } else {
-             legendContainer.innerHTML = '<div class="text-center text-gray-600">No hay datos para este mes y año.</div>';
+        } catch (error) {
+             // El error ya se maneja en obtenerDatosAppsScript
+             legendDiv.innerHTML = '<p class="text-red-500">Error al cargar datos del mes.</p>';
         }
     }
 
 
-     // Funciones para preparar datos para Chart.js
-     function obtenerDatosAnualesParaGrafico(datosPorAño) {
-         const años = Object.keys(datosPorAño).sort();
-         const ingresosAnuales = años.map(año => {
-             const total = datosPorAño[año].reduce((sum, mes) => sum + mes.ingresos, 0);
-             return total;
-         });
-          const gastosAnuales = años.map(año => {
-             const total = datosPorAño[año].reduce((sum, mes) => sum + mes.gastos, 0);
-             return total;
-         });
-          const impuestosAnuales = años.map(año => {
-             const total = datosPorAño[año].reduce((sum, mes) => sum + mes.impuestos, 0);
-             return total;
-         });
+    // --- Inicialización ---
 
+    // Cargar datos y mostrar la pestaña de inicio al cargar la página
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Al cargar la página, intentar listar clientes para poblar el array 'clientes'
+        // Esto también se llama cuando se cambia a la pestaña 'clientes'
+        // await listarClientes(); // No es necesario llamar aquí, se llama al abrir la pestaña 'clientes'
 
-         return {
-             labels: años,
-             datasets: [
-                 { label: 'Ingresos', data: ingresosAnuales, backgroundColor: 'rgba(75, 192, 192, 0.8)', borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 1 },
-                 { label: 'Gastos', data: gastosAnuales, backgroundColor: 'rgba(255, 99, 132, 0.8)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 1 },
-                 { label: 'Impuestos', data: impuestosAnuales, backgroundColor: 'rgba(54, 162, 235, 0.8)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 }
-             ]
-         };
-     }
-
-     function obtenerDatosMensualesParaGrafico(datosMensuales) {
-         // Asegurarse de que los datos estén ordenados por mes
-         const datosOrdenados = [...datosMensuales].sort((a, b) => meses.indexOf(a.mes) - meses.indexOf(b.mes));
-
-         const ingresosMensuales = datosOrdenados.map(dato => dato.ingresos);
-         const gastosMensuales = datosOrdenados.map(dato => dato.gastos);
-         const impuestosMensuales = datosOrdenados.map(dato => dato.impuestos);
-
-          return {
-             labels: datosOrdenados.map(dato => dato.mes), // Usar los meses de los datos ordenados
-             datasets: [
-                 { label: 'Ingresos', data: ingresosMensuales, borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.4)', fill: true, tension: 0.4 }, /* Mayor opacidad y tensión */
-                 { label: 'Gastos', data: gastosMensuales, borderColor: 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.4)', fill: true, tension: 0.4 }, /* Mayor opacidad y tensión */
-                 { label: 'Impuestos', data: impuestosMensuales, borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.4)', fill: true, tension: 0.4 } /* Mayor opacidad y tensión */
-             ]
-         };
-     }
-
-     function obtenerDatosParaGraficaPastel(datoMensual) {
-         return {
-             labels: ['Ingresos', 'Gastos', 'Impuestos'],
-             datasets: [{
-                 data: [datoMensual.ingresos, datoMensual.gastos, datoMensual.impuestos],
-                 backgroundColor: [
-                     'rgba(75, 192, 192, 0.8)', // Ingresos (Verde/Azul)
-                     'rgba(255, 99, 132, 0.8)', // Gastos (Rojo)
-                     'rgba(54, 162, 235, 0.8)'  // Impuestos (Azul)
-                 ],
-                 borderColor: [
-                      'rgba(75, 192, 192, 1)',
-                     'rgba(255, 99, 132, 1)',
-                     'rgba(54, 162, 235, 1)'
-                 ],
-                 borderWidth: 1
-             }]
-         };
-     }
-
-
-    // --- Funcionalidad de Descarga de Datos ---
-    function downloadData() {
-        // Convertir el array de clientes a una cadena JSON
-        const data = JSON.stringify(clientes, null, 2); // null, 2 para formatear el JSON con indentación
-
-        // Crear un Blob con el contenido JSON
-        const blob = new Blob([data], { type: 'application/json' });
-
-        // Crear un enlace de descarga temporal
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'contacloud_data.json'; // Nombre del archivo a descargar
-
-        // Simular un clic en el enlace para iniciar la descarga
-        document.body.appendChild(a);
-        a.click();
-
-        // Limpiar el enlace temporal
-        document.body.removeChild(a);
-
-        // Liberar el objeto URL
-        URL.revokeObjectURL(a.href);
-    }
-
-
-    // Inicializar la aplicación mostrando la pestaña de inicio y cargando datos iniciales
-    document.addEventListener('DOMContentLoaded', () => {
-        // Cargar datos guardados si existen (opcional)
-        cargarDatos();
-        // Mostrar la vista principal y la pestaña de inicio
-        mostrarVista('main');
-        openTab(null, 'inicio');
-        // Actualizar el resumen con los datos iniciales (vacíos o cargados)
-        actualizarResumenInicio();
+        // Mostrar la pestaña de inicio por defecto
+        openTab(null, 'inicio'); // Pasar null para el evento y 'inicio' como tabId
     });
-
-     // Función para guardar datos en localStorage (opcional)
-    function guardarDatos() {
-        localStorage.setItem('clientes', JSON.stringify(clientes));
-    }
-
-    // Función para cargar datos de localStorage (opcional)
-    function cargarDatos() {
-        const clientesGuardados = localStorage.getItem('clientes');
-        if (clientesGuardados) {
-            clientes = JSON.parse(clientesGuardados);
-            // Asegurarse de que los clientes cargados tengan la estructura esperada (datosPorAño, etc.)
-            clientes.forEach(cliente => {
-                // Convertir estructuras antiguas si existen (para compatibilidad con versiones anteriores)
-                if (cliente.datosMensuales && !cliente.datosPorAño) {
-                    cliente.datosPorAño = { [añoActual]: cliente.datosMensuales };
-                    delete cliente.datosMensuales; // Eliminar la propiedad antigua
-                }
-                 if (cliente.declaracionesMensuales && !cliente.declaracionesPorAño) {
-                    cliente.declaracionesPorAño = { [añoActual]: cliente.declaracionesMensuales };
-                    delete cliente.declaracionesMensuales; // Eliminar la propiedad antigua
-                 }
-                 if (cliente.pagosMensuales && !cliente.pagosPorAño) {
-                    cliente.pagosPorAño = { [añoActual]: cliente.pagosMensuales };
-                    delete cliente.pagosMensuales; // Eliminar la propiedad antigua
-                 }
-
-
-                // Asegurar que el año actual exista en las estructuras por año si no hay datos
-                 if (!cliente.datosPorAño[añoActual]) {
-                     cliente.datosPorAño[añoActual] = meses.map(mes => ({ mes: mes, ingresos: 0, gastos: 0, impuestos: 0 }));
-                 } else {
-                     // Asegurar que todos los meses existan para el año actual y ordenar
-                     const mesesExistentes = cliente.datosPorAño[añoActual].map(d => d.mes);
-                     meses.forEach(mes => {
-                         if (!mesesExistentes.includes(mes)) {
-                             cliente.datosPorAño[añoActual].push({ mes: mes, ingresos: 0, gastos: 0, impuestos: 0 });
-                         }
-                     });
-                      cliente.datosPorAño[añoActual].sort((a, b) => meses.indexOf(a.mes) - meses.indexOf(b.mes));
-                 }
-
-                 if (!cliente.declaracionesPorAño[añoActual]) {
-                     cliente.declaracionesPorAño[añoActual] = meses.map(mes => ({ mes: mes, completada: false }));
-                 } else {
-                     const mesesExistentes = cliente.declaracionesPorAño[añoActual].map(d => d.mes);
-                     meses.forEach(mes => {
-                         if (!mesesExistentes.includes(mes)) {
-                             cliente.declaracionesPorAño[añoActual].push({ mes: mes, completada: false });
-                         }
-                     });
-                     cliente.datosPorAño[añoActual].sort((a, b) => meses.indexOf(a.mes) - meses.indexOf(b.mes));
-                 }
-
-                 if (!cliente.pagosPorAño[añoActual]) {
-                     cliente.pagosPorAño[añoActual] = meses.map(mes => ({ mes: mes, pagado: false }));
-                 } else {
-                     const mesesExistentes = cliente.pagosPorAño[añoActual].map(p => p.mes);
-                     meses.forEach(mes => {
-                         if (!mesesExistentes.includes(mes)) {
-                             cliente.pagosPorAño[añoActual].push({ mes: mes, pagado: false });
-                         }
-                     });
-                     cliente.pagosPorAño[añoActual].sort((a, b) => meses.indexOf(a.mes) - meses.indexOf(b.mes));
-                 }
-
-
-                 // Asegurar rfc existe
-                 if (cliente.rfc === undefined) {
-                     cliente.rfc = ''; // O algún valor por defecto
-                 }
-
-                 // Asegurar id existe
-                 if (cliente.id === undefined) {
-                     cliente.id = Date.now() + Math.random(); // Asignar un ID si falta
-                 }
-            });
-        }
-    }
-
-     // Guardar datos después de las funciones de modificación
-        const originalAgregarCliente = agregarCliente;
-        agregarCliente = function() {
-            originalAgregarCliente();
-            // guardarDatos() ya se llama dentro de la función original ahora
-        }
-
-        // La edición de datos mensuales ahora se maneja en handleMonthlyDataEdit
-
-         const originalMarcarDeclaracionMensual = marcarDeclaracionMensual;
-         marcarDeclaracionMensual = function(mes, completada) {
-             originalMarcarDeclaracionMensual(mes, completada);
-             // guardarDatos() ya se llama dentro de la función original ahora
-         }
-
-         const originalMarcarPagoMensual = marcarPagoMensual;
-         marcarPagoMensual = function(mes, pagado) {
-             originalMarcarPagoMensual(mes, pagado);
-             // guardarDatos() ya se llama dentro de la función original ahora
-         }
-
-         const originalGuardarEdicionCliente = guardarEdicionCliente;
-         guardarEdicionCliente = function() {
-             originalGuardarEdicionCliente();
-             // guardarDatos() ya se llama dentro de la función original ahora
-         }
-
 
 </script>
 
