@@ -632,7 +632,6 @@
 
 <script>
     // URL de tu Google Apps Script publicado como Web App
-    // ¡¡¡REEMPLAZA ESTA URL CON LA TUYA!!!
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLe4E7pILWOj2VEvQPx62cWaIM-RbdX2AaRMJqVD2AaMXxXBgANpYSHWnBIEY5loSY/exec';
 
     // Array para almacenar los clientes en el frontend, se llenará desde Google Sheets
@@ -859,10 +858,17 @@
     // --- Funcionalidad de Detalle de Cliente (en la nueva vista) ---
 
     async function mostrarDetalleCliente(clienteId) {
+        console.log("Intentando mostrar detalle para cliente ID:", clienteId); // Log 1
+
         // Buscar el cliente en el array local (ya cargado por listarClientes)
-        const cliente = clientes.find(c => cliente.id == clienteId); // Usar == para comparar string/number si es necesario
+        // CORRECCIÓN: Usar 'c.id' en lugar de 'cliente.id' dentro del find callback
+        const cliente = clientes.find(c => c.id == clienteId); // Usar == para comparar string/number si es necesario
+
+        console.log("Cliente encontrado en array local:", cliente); // Log 2
+
         if (!cliente) {
             mostrarMensaje('Cliente no encontrado.', 'error');
+            console.error("Cliente con ID", clienteId, "no encontrado en el array local."); // Log 3
             return;
         }
 
@@ -872,14 +878,34 @@
         document.getElementById('nombre-cliente-detalle').textContent = cliente.nombre;
         document.getElementById('rfc-cliente-detalle').textContent = cliente.rfc;
 
-        // Cargar opciones en los selectores de año en la vista de detalle
-        await cargarSelectoresAñoDetalle(clienteId);
+        console.log("Cargando selectores de año..."); // Log 4
+        try {
+            await cargarSelectoresAñoDetalle(clienteId);
+            console.log("Selectores de año cargados."); // Log 5
+        } catch (error) {
+            console.error("Error al cargar selectores de año:", error); // Log de error específico
+            mostrarMensaje('Error al cargar años disponibles.', 'error');
+            // Decide si quieres detener la ejecución aquí o continuar
+            // return;
+        }
 
-        // Mostrar datos para el año seleccionado
-        await mostrarDatosClientePorAño(); // Ahora es asíncrono
 
+        console.log("Mostrando datos del cliente por año..."); // Log 6
+        try {
+             await mostrarDatosClientePorAño(); // Ahora es asíncrono
+             console.log("Datos del cliente por año mostrados."); // Log 7
+        } catch (error) {
+             console.error("Error al mostrar datos del cliente por año:", error); // Log de error específico
+             mostrarMensaje('Error al cargar datos del cliente.', 'error');
+             // Decide si quieres detener la ejecución aquí o continuar
+             // return;
+        }
+
+
+        console.log("Cambiando a vista de detalle..."); // Log 8
         // Cambiar a la vista de detalle de cliente
         mostrarVista('detalle-cliente');
+        console.log("Vista de detalle mostrada."); // Log 9
     }
 
     // Carga los selectores de año en la vista de detalle con los años disponibles para el cliente
@@ -913,8 +939,8 @@
              yearSelectors.forEach(selector => selector.value = añoSeleccionado);
 
          } catch (error) {
-             // El error ya se maneja en obtenerDatosAppsScript
-              mostrarMensaje('Error al cargar años disponibles.', 'error');
+             // El error ya se maneja en obtenerDatosAppsScript, pero se agregó log en mostrarDetalleCliente
+              throw error; // Propagar el error para que el catch en mostrarDetalleCliente lo maneje
          }
     }
 
@@ -1018,10 +1044,11 @@
 
 
         } catch (error) {
-            // El error ya se maneja en obtenerDatosAppsScript
+            // El error ya se maneja en obtenerDatosAppsScript, pero se agregó log en mostrarDetalleCliente
              tablaDatosMensualesBody.innerHTML = '<tr><td colspan="4" class="text-center text-red-500">Error al cargar datos mensuales.</td></tr>';
              tablaDeclaracionesBody.innerHTML = '<tr><td colspan="2" class="text-center text-red-500">Error al cargar declaraciones.</td></tr>';
              tablaPagosBody.innerHTML = '<tr><td colspan="2" class="text-center text-red-500">Error al cargar pagos.</td></tr>';
+             throw error; // Propagar el error para que el catch en mostrarDetalleCliente lo maneje
         }
     }
 
