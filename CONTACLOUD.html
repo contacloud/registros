@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacloud Local</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Configuración personalizada de Tailwind para colores y fuentes
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'], // Usar Inter como fuente principal
+                    },
+                    colors: {
+                        // Colores de fondo inspirados en la última imagen (azul oscuro/morado)
+                        'gradient-main-start': '#2a2a4a', /* Azul oscuro */
+                        'gradient-main-end': '#4a2a4a', /* Morado oscuro */
+                        // Definir colores para los degradados de elementos (mantener un contraste)
+                        'gradient-element-start': '#6a4a8a', /* Tono morado */
+                        'gradient-element-end': '#8a6a4a', /* Tono dorado/naranja */
+                        'gradient-element-hover-start': '#5a3a7a',
+                        'gradient-element-hover-end': '#7a5a3a',
+                        // Colores para el menú lateral (fondo oscuro, texto blanco)
+                        'sidebar-bg': '#1a1a3a', /* Azul muy oscuro para la barra lateral */
+                        'sidebar-link': '#ffffff', /* Blanco para enlaces */
+                        'sidebar-link-hover': '#e0e0e0', /* Gris claro al pasar el ratón */
+                        'sidebar-active': '#4a2a4a', /* Morado oscuro para activo */
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos Generales y Degradado de Fondo */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Aplicar el degradado de fondo de la última imagen */
+            background: linear-gradient(to right, var(--tw-gradient-main-start) 0%, var(--tw-gradient-main-end) 100%);
+            --tw-gradient-main-start: #2a2a4a; /* Azul oscuro */
+            --tw-gradient-main-end: #4a2a4a; /* Morado oscuro */
+            color: #333; /* Color de texto por defecto (será sobrescrito en el container) */
+            line-height: 1.6;
+            min-height: 100vh; /* Asegura que el degradado cubra toda la altura */
+            box-sizing: border-box;
+            display: flex; /* Usar flexbox para el layout principal (sidebar + content) */
+        }
+         /* Estilos del Menú Lateral */
+        .sidebar {
+            width: 200px; /* Ancho fijo del menú lateral */
+            background-color: var(--tw-sidebar-bg);
+            color: var(--tw-sidebar-link); /* Color de texto por defecto en sidebar */
+            padding: 20px;
+            display: flex;
+            flex-direction: column; /* Elementos apilados verticalmente */
+            border-radius: 0 20px 20px 0; /* Bordes redondeados solo a la derecha */
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3); /* Sombra a la derecha */
+             flex-shrink: 0; /* Evita que se encoja cuando el contenido principal es grande */
+        }
+        .sidebar h2 {
+            color: white; /* Color del título en la sidebar */
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .sidebar-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            color: white !important; /* Texto del enlace siempre blanco */
+            text-decoration: none; /* Sin subrayado */
+            transition: all 0.3s ease; /* Transición suave para hover */
+            font-size: 1rem;
+        }
+        .sidebar-nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Fondo ligeramente visible al pasar el ratón */
+            color: white !important; /* Color al pasar el ratón (blanco) */
+        }
+        .sidebar-nav-link.active {
+            background-color: var(--tw-sidebar-active); /* Fondo para el enlace activo */
+            color: white !important; /* Texto blanco para activo */
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para el enlace activo */
+        }
+        .sidebar-nav-link i {
+            margin-right: 10px; /* Espacio para iconos si se usan */
+        }
+
+         /* Contenido Principal (área a la derecha de la sidebar) */
+        .main-content {
+            flex-grow: 1; /* Ocupar el espacio restante */
+            padding: 20px;
+            overflow-y: auto; /* Permitir scroll vertical si el contenido es largo */
+        }
+
+        /* Contenedor principal dentro del main-content */
+        .container {
+            max-width: 1200px; /* Ancho máximo */
+            margin: 0 auto; /* Centrar horizontalmente */
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1); /* Fondo con baja opacidad para ver el fondo principal */
+            border-radius: 30px; /* Bordes redondeados */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Sombra pronunciada */
+            backdrop-filter: blur(8px); /* Efecto de desenfoque detrás del contenedor */
+             color: #eee; /* Texto claro para contrastar con el fondo oscuro */
+        }
+        /* Asegurar que los títulos dentro del contenedor sean blancos */
+        .container h2, .container h3, .container h4 {
+            color: white;
+        }
+         /* Color para las etiquetas dentro del contenedor */
+         .container label {
+             color: #ccc;
+         }
+
+        /* Estilo para los contenidos de las pestañas (ocultos por defecto) */
+        .tab-content {
+            display: none;
+            padding-top: 0; /* Ajuste de padding si es necesario */
+        }
+        /* Estilo para el contenido de la pestaña activa */
+        .tab-content.active {
+            display: block;
+        }
+        /* Estilo para las tarjetas (cards) dentro de los contenidos */
+        .card {
+            background-color: rgba(255, 255, 255, 0.15); /* Fondo de tarjeta con opacidad */
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+             backdrop-filter: blur(5px); /* Ligero desenfoque en las tarjetas */
+             color: #eee; /* Texto claro dentro de las tarjetas */
+        }
+         /* Asegurar que los títulos dentro de las tarjetas sean blancos */
+         .card h3, .card h4 {
+             color: white;
+         }
+
+        /* Estilo para los campos de entrada (input, select) */
+        .input-field {
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Borde con opacidad */
+            background-color: rgba(255, 255, 255, 0.1); /* Fondo con opacidad */
+            color: white; /* Texto blanco */
+            border-radius: 12px;
+            margin-bottom: 15px;
+            width: 100%; /* Ancho completo por defecto */
+            box-sizing: border-box; /* Incluir padding y borde en el ancho */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave al enfocar */
+        }
+         /* Color del placeholder con opacidad */
+         .input-field::placeholder {
+             color: rgba(255, 255, 255, 0.6);
+         }
+        /* Estilo al enfocar el campo de entrada */
+        .input-field:focus {
+            outline: none; /* Eliminar el contorno por defecto */
+            border-color: rgba(0, 123, 255, 0.6); /* Borde azul al enfocar con opacidad */
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.2); /* Fondo más claro al enfocar */
+        }
+
+        /* Estilo específico para el texto en las opciones de los selectores (cuando están desplegados) */
+        .input-field option {
+            color: #333; /* Texto negro para las opciones del select */
+        }
+
+        /* Estilo para los botones */
+        .btn {
+            padding: 16px 28px;
+            background: linear-gradient(to right, var(--tw-gradient-element-start) 0%, var(--tw-gradient-element-end) 100%); /* Degradado de fondo */
+             --tw-gradient-element-start: #6a4a8a; /* Tono morado */
+             --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
+            color: white; /* Texto blanco */
+            border: none; /* Sin borde */
+            border-radius: 12px; /* Bordes redondeados */
+            cursor: pointer; /* Cursor de mano al pasar el ratón */
+            transition: all 0.3s ease; /* Transición suave para hover y active */
+            font-weight: medium;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4); /* Sombra */
+        }
+        /* Estilo al pasar el ratón por el botón */
+        .btn:hover {
+            --tw-gradient-element-start: #5a3a7a; /* Cambio de color en el degradado */
+            --tw-gradient-element-end: #7a5a3a;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+        }
+        /* Estilo al hacer clic en el botón */
+        .btn:active {
+            --tw-gradient-element-start: #4a2a6a; /* Cambio de color en el degradado */
+            --tw-gradient-element-end: #6a4a2a;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6); /* Sombra más sutil */
+        }
+         /* Estilo para botones pequeños */
+         .btn-sm {
+             padding: 10px 16px;
+             font-size: 0.9rem;
+         }
+        /* Estilo para las tablas */
+        .table {
+            width: 100%; /* Ancho completo */
+            border-collapse: collapse; /* Bordes colapsados */
+            margin-top: 20px;
+            border-radius: 15px; /* Bordes redondeados */
+            overflow: hidden; /* Oculta el contenido que se desborda de los bordes redondeados */
+            box-shadow: 0 44px 8px rgba(0, 0, 0, 0.2);
+        }
+        /* Estilo para celdas de encabezado y datos */
+        .table th, .table td {
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Borde con opacidad */
+            padding: 15px;
+            text-align: left; /* Texto alineado a la izquierda */
+             color: #eee; /* Texto claro en la tabla */
+        }
+         /* Estilo para los encabezados de la tabla */
+         .table th {
+             background-color: rgba(242, 242, 242, 0.1); /* Fondo de encabezado con opacidad */
+             font-weight: medium;
+             color: white; /* Texto blanco en encabezados */
+         }
+         /* Estilo para celdas editables */
+         .table td[contenteditable="true"] {
+             background-color: rgba(238, 238, 255, 0.1); /* Ligero fondo con opacidad */
+             cursor: text; /* Cursor de texto */
+             transition: background-color 0.2s ease; /* Transición suave al editar */
+         }
+          /* Estilo al enfocar una celda editable */
+          .table td[contenteditable="true"]:focus {
+             outline: none; /* Eliminar el contorno por defecto */
+             background-color: rgba(221, 221, 255, 0.2); /* Fondo más visible al enfocar */
+         }
+
+        /* Estilo para rayado de filas (filas pares) */
+        .table tr:nth-child(even) {
+            background-color: rgba(249, 249, 249, 0.05); /* Rayado para filas con opacidad muy baja */
+        }
+         /* Estilos específicos para la vista de detalle de cliente (inicialmente oculta) */
+         #detalle-cliente-view {
+             display: none; /* Oculto por defecto */
+             padding: 30px;
+             background-color: rgba(255, 255, 255, 0.1); /* Fondo con opacidad */
+             border-radius: 30px;
+             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+             backdrop-filter: blur(8px);
+             margin: 20px auto; /* Centrar y añadir margen */
+             max-width: 1200px;
+             color: #eee; /* Texto claro */
+         }
+          /* Estilo para el título principal en la vista de detalle */
+          #detalle-cliente-view h2 {
+             background: linear-gradient(to right, var(--tw-gradient-element-start) 0%, var(--tw-gradient-element-end) 100%);
+             --tw-gradient-element-start: #6a4a8a; /* Tono morado */
+             --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
+             -webkit-background-clip: text; /* Recortar el fondo al texto */
+             -webkit-text-fill-color: transparent; /* Hacer el texto transparente para que se vea el fondo recortado */
+             font-size: 2.5rem;
+             margin-bottom: 10px;
+             font-weight: bold;
+         }
+          /* Color para las etiquetas en la vista de detalle */
+          #detalle-cliente-view label {
+             color: #ccc;
+         }
+          /* Ajustar color de texto para el RFC en la vista de detalle */
+          #detalle-cliente-view .text-gray-700 {
+             color: #ccc;
+         }
+
+         /* Estilo para el placeholder del dashboard (área de gráficos no implementada aún) */
+         .dashboard-placeholder {
+             height: 300px;
+             background: linear-gradient(to right, rgba(106, 74, 138, 0.3), rgba(138, 106, 74, 0.3)); /* Degradado suave con opacidad */
+             border-radius: 18px;
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             justify-content: center;
+             color: #ccc; /* Texto claro */
+             font-size: 1.5rem;
+             margin-bottom: 30px;
+             box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.2); /* Sombra interior */
+          }
+          /* Texto más claro dentro del placeholder */
+          .dashboard-placeholder p {
+               color: #bbb;
+           }
+
+          /* Estilo para el modal (inicialmente oculto) */
+          .modal {
+               display: none; /* Oculto por defecto */
+               position: fixed; /* Posición fija en la ventana */
+               z-index: 100; /* Por encima de otros elementos */
+               left: 0;
+               top: 0;
+               width: 100%;
+               height: 100%;
+               overflow: auto; /* Permitir scroll si el contenido es grande */
+               background-color: rgba(0,0,0,0.8); /* Fondo oscuro semi-transparente */
+               justify-content: center; /* Centrar contenido horizontalmente (con display: flex) */
+               align-items: center; /* Centrar contenido verticalmente (con display: flex) */
+               animation: fadeIn 0.3s ease-out; /* Animación de aparición */
+           }
+           /* Estilo para el contenido del modal */
+           .modal-content {
+               background-color: rgba(255, 255, 255, 0.95); /* Fondo casi opaco */
+               margin: auto; /* Centrar (si no usas flex) */
+               padding: 30px;
+               border: 1px solid rgba(136, 136, 136, 0.5); /* Borde con opacidad */
+               width: 90%; /* Ancho máximo */
+               max-width: 550px; /* Ancho máximo absoluto */
+               border-radius: 20px; /* Bordes redondeados */
+               box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+               animation: slideIn 0.3s ease-out; /* Animación de aparición */
+               color: #333; /* Texto oscuro dentro del modal */
+           }
+           /* Estilo para el título dentro del modal */
+           .modal-content h3 {
+               color: #333;
+           }
+           /* Estilo para el botón de cerrar modal */
+           .close-button {
+               color: #aaa;
+               float: right; /* Alinear a la derecha */
+               font-size: 32px;
+               font-weight: bold;
+               transition: color 0.3s ease;
+           }
+           /* Estilo al pasar el ratón o enfocar el botón de cerrar */
+           .close-button:hover,
+           .close-button:focus {
+               color: #000;
+               text-decoration: none;
+               cursor: pointer;
+           }
+           /* Definición de animaciones */
+           @keyframes fadeIn {
+               from { opacity: 0; }
+               to { opacity: 1; }
+           }
+           @keyframes slideIn {
+               from { transform: translateY(-20px); opacity: 0; }
+               to { transform: translateY(0); opacity: 1; }
+           }
+
+           /* Estilo para el nuevo elemento visual en la pestaña Inicio */
+           .inicio-visual-card {
+               background: linear-gradient(to right, var(--tw-gradient-element-start) 0%, var(--tw-gradient-element-end) 100%); /* Degradado de fondo */
+               --tw-gradient-element-start: #6a4a8a; /* Tono morado */
+               --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
+               color: white; /* Texto blanco */
+               border-radius: 20px;
+               padding: 30px;
+               text-align: center;
+               font-size: 1.8rem;
+               font-weight: bold;
+               box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+           }
+            /* Estilos para el área de gráficos */
+           #graficos .card {
+               padding: 30px;
+               /* Aplicar degradado al card de gráficos */
+               background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.15), rgba(240, 240, 255, 0.1)); /* Degradado con opacidad */
+           }
+           /* Contenedor para cada gráfico individual */
+           #graficos .chart-container {
+               margin-bottom: 30px;
+               background-color: rgba(249, 249, 249, 0.1); /* Fondo con opacidad */
+               border-radius: 15px;
+               padding: 20px;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+           }
+            /* Estilo para el título dentro del área de gráficos */
+            #graficos-area h3 {
+               background: linear-gradient(to right, var(--tw-gradient-element-start) 0%, var(--tw-gradient-element-end) 100%);
+               --tw-gradient-element-start: #6a4a8a; /* Tono morado */
+               --tw-gradient-element-end: #8a6a4a; /* Tono dorado/naranja */
+               -webkit-background-clip: text; /* Recortar el fondo al texto */
+               -webkit-text-fill-color: transparent; /* Hacer el texto transparente para que se vea el fondo recortado */
+               font-size: 1.8rem;
+               font-weight: bold;
+               color: white !important; /* Texto del mensaje personalizado siempre blanco */
+            }
+            /* Contenedor para limitar el tamaño del canvas del gráfico */
+            .chart-canvas-container {
+               position: relative; /* Necesario para que el canvas ocupe el 100% del contenedor */
+               height: 300px; /* Altura fija para limitar el tamaño del gráfico */
+               width: 100%; /* Ancho completo del contenedor */
+            }
+            /* Asegura que el canvas ocupe todo el espacio del contenedor */
+            .chart-canvas-container canvas {
+               display: block; /* Evita espacio extra debajo del canvas */
+               width: 100% !important; /* Asegura que Chart.js use el 100% del ancho del contenedor */
+               height: 100% !important; /* Asegura que Chart.js use el 100% de la altura del contenedor */
+            }
+            /* Estilos para la leyenda personalizada de la gráfica de pastel */
+            .pie-chart-legend {
+               display: flex;
+               flex-direction: column;
+               align-items: flex-start;
+               margin-left: 20px;
+               color: #eee; /* Texto claro para la leyenda */
+            }
+            /* Estilo para cada item de la leyenda */
+            .pie-chart-legend-item {
+               display: flex;
+               align-items: center;
+               margin-bottom: 5px;
+            }
+            /* Cuadrado de color en la leyenda */
+            .pie-chart-legend-color {
+               width: 15px;
+               height: 15px;
+               border-radius: 3px;
+               margin-right: 10px;
+            }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Contacloud</h2>
+    <a href="#" class="sidebar-nav-link active" onclick="openTab(event, 'inicio')">
+        Inicio
+    </a>
+    <a href="#" class="sidebar-nav-link" onclick="openTab(event, 'clientes')">
+         Clientes
+    </a>
+     <a href="#" class="sidebar-nav-link" onclick="openTab(event, 'graficos')">
+         Gráficos
+     </a>
+    </div>
+
+<div class="main-content">
+    <div class="container">
+        <div id="inicio" class="tab-content active">
+            <h2 class="text-2xl font-semibold mb-6">Resumen General</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div class="inicio-visual-card col-span-1 md:col-span-2">
+                     ¡Bienvenido a Contacloud Local!
+                     <p class="text-lg font-normal mt-2">Controla tus declaraciones y pagos pendientes de un vistazo.</p>
+                 </div>
+                <div class="card">
+                    <h3 class="text-xl font-medium mb-4">Declaraciones Pendientes</h3>
+                    <ul id="lista-pendientes">
+                     </ul>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-medium mb-4">Pagos Pendientes</h3>
+                    <ul id="lista-pagos">
+                     </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="clientes" class="tab-content">
+            <h2 class="text-2xl font-semibold mb-6">Gestión de Clientes</h2>
+            <div class="mb-6 flex flex-col md:flex-row gap-4">
+                <input type="text" id="nombre-cliente" class="input-field flex-grow" placeholder="Nombre del Cliente">
+                <input type="text" id="rfc-cliente" class="input-field flex-grow" placeholder="RFC">
+                <button class="btn" onclick="agregarCliente()">Agregar Cliente</button>
+            </div>
+            <div id="lista-clientes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+             </div>
+        </div>
+
+        <div id="graficos" class="tab-content">
+            <h2 class="text-2xl font-semibold mb-6">Gráficos de Clientes</h2>
+            <div class="card">
+                 <div class="mb-6">
+                     <label for="cliente-selector-graficos" class="mr-4 text-lg font-medium">Seleccionar Cliente:</label>
+                     <select id="cliente-selector-graficos" class="input-field w-auto inline-block" onchange="mostrarGraficosCliente()">
+                         <option value="">-- Selecciona un cliente --</option>
+                     </select>
+                 </div>
+                 <div id="graficos-area" style="display: none;">
+                     <h3 id="mensaje-personalizado-graficos" class="text-xl font-semibold mb-6"></h3>
+
+                     <div class="chart-container">
+                         <h4 class="text-lg font-medium mb-4">Resumen Anual (Evolución Mensual)</h4>
+                         <div class="chart-canvas-container">
+                             <canvas id="graficoAnual"></canvas>
+                         </div>
+                          <div class="mt-4 text-sm text-gray-700">
+                             <p>Nota: Este gráfico muestra la evolución mensual de Ingresos, Gastos e Impuestos para el año actual.</p>
+                          </div>
+                     </div>
+
+                     <div class="chart-container">
+                         <h4 class="text-lg font-medium mb-4">Gráfica Mensual (Ingresos, Gastos, Impuestos)</h4>
+                          <div class="mb-4 flex items-center gap-4">
+                             <label for="month-selector-pie">Mes:</label>
+                             <select id="month-selector-pie" class="input-field w-auto inline-block" onchange="updateMonthlyPieChart()">
+                                 <option value="Enero">Enero</option>
+                                 <option value="Febrero">Febrero</option>
+                                 <option value="Marzo">Marzo</option>
+                                 <option value="Abril">Abril</option>
+                                 <option value="Mayo">Mayo</option>
+                                 <option value="Junio">Junio</option>
+                                 <option value="Julio">Julio</option>
+                                 <option value="Agosto">Agosto</option>
+                                 <option value="Septiembre">Septiembre</option>
+                                 <option value="Octubre">Octubre</option>
+                                 <option value="Noviembre">Noviembre</option>
+                                 <option value="Diciembre">Diciembre</option>
+                             </select>
+                             <label for="year-selector-pie">Año:</label>
+                             <select id="year-selector-pie" class="input-field w-auto inline-block" onchange="mostrarGraficosCliente()">
+                                 </select>
+                             </div>
+                          <div class="flex flex-col md:flex-row items-center">
+                             <div class="chart-canvas-container flex-grow">
+                                 <canvas id="graficoMensualPie"></canvas>
+                             </div>
+                              <div id="pie-chart-legend" class="pie-chart-legend mt-4 md:mt-0">
+                                  </div>
+                          </div>
+
+                          <div class="mt-4 text-sm text-gray-700">
+                             <p>Nota: Selecciona un mes y año para ver el desglose de Ingresos, Gastos e Impuestos en la gráfica de pastel.</p>
+                          </div>
+                     </div>
+                     </div>
+                 <div id="no-cliente-selected" class="text-center text-gray-600 text-lg mt-8">
+                     Selecciona un cliente para ver sus gráficos.
+                 </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="detalle-cliente-view" class="container">
+    <button class="btn mb-6" onclick="cerrarDetalleCliente()">← Volver a Clientes</button>
+    <h2 id="nombre-cliente-detalle"></h2>
+     <p class="text-lg text-gray-700 mb-6">RFC: <span id="rfc-cliente-detalle"></span></p>
+
+     <button class="btn btn-sm mb-6" onclick="abrirModalEditarCliente()">Editar Cliente</button>
+
+    <div class="card">
+         <h3 class="text-xl font-medium mb-4">Resumen Financiero Anual</h3>
+         <div class="dashboard-placeholder mb-6">
+             Espacio para Gráficos y Dashboards
+             <p class="text-sm text-gray-600 mt-2">Aquí se mostrarían gráficos de ingresos, gastos, impuestos por mes o año.</p>
+         </div>
+         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center font-bold text-xl text-gray-800">
+              <div>Ingresos Anuales: $<span id="total-ingresos-cliente">0</span></div>
+              <div>Gastos Anuales: $<span id="total-gastos-cliente">0</span></div>
+              <div>Impuestos Anuales: $<span id="total-impuestos-cliente">0</span></div>
+         </div>
+    </div>
+
+    <div class="card">
+         <h3 class="text-xl font-medium mb-4">Datos Mensuales</h3>
+          <div class="mb-4">
+             <label for="year-selector-data" class="mr-2">Año:</label>
+             <select id="year-selector-data" class="input-field w-auto inline-block" onchange="mostrarDatosClientePorAño()">
+                 </select>
+          </div>
+         <table class="table">
+              <thead>
+                 <tr>
+                     <th>Mes</th>
+                     <th>Ingresos</th>
+                     <th>Gastos</th>
+                     <th>Impuestos</th>
+                 </tr>
+              </thead>
+              <tbody id="tabla-datos-mensuales">
+                  </tbody>
+         </table>
+         </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+         <div class="card">
+             <h3 class="text-xl font-medium mb-4">Declaraciones Mensuales <span id="declaraciones-year-title"></span></h3>
+              <div class="mb-4">
+                 <label for="year-selector-declaraciones" class="mr-2">Año:</label>
+                 <select id="year-selector-declaraciones" class="input-field w-auto inline-block" onchange="mostrarDatosClientePorAño()">
+                     </select>
+              </div>
+             <table class="table">
+                  <thead>
+                     <tr>
+                         <th>Mes</th>
+                         <th>Completada</th>
+                     </tr>
+                  </thead>
+                  <tbody id="tabla-declaraciones-mensuales">
+                      </tbody>
+             </table>
+         </div>
+         <div class="card">
+             <h3 class="text-xl font-medium mb-4">Estado de Pago Mensual <span id="pagos-year-title"></span></h3>
+              <div class="mb-4">
+                 <label for="year-selector-pagos" class="mr-2">Año:</label>
+                 <select id="year-selector-pagos" class="input-field w-auto inline-block" onchange="mostrarDatosClientePorAño()">
+                 </select>
+              </div>
+              <table class="table">
+                  <thead>
+                     <tr>
+                         <th>Mes</th>
+                         <th>Pagado</th>
+                     </tr>
+                  </thead>
+                  <tbody id="tabla-pagos-mensuales">
+                      </tbody>
+              </table>
+         </div>
+    </div>
+
+
+</div>
+
+<div id="modalEditarCliente" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="cerrarModalEditarCliente()">&times;</span>
+    <h3 class="text-xl font-semibold mb-4">Editar Cliente</h3>
+    <input type="text" id="edit-nombre-cliente" class="input-field" placeholder="Nombre del Cliente">
+    <input type="text" id="edit-rfc-cliente" class="input-field" placeholder="RFC">
+    <button class="btn mt-4" onclick="guardarEdicionCliente()">Guardar Cambios</button>
+  </div>
+</div>
+
+
+<script>
+    // --- CONFIGURACIÓN ---
+    // URL BASE de tu servidor Node.js local.
+    // ASEGÚRATE de que tu servidor Node.js esté corriendo en esta dirección y puerto.
+    const LOCAL_BACKEND_URL = 'http://localhost:3000'; // Ejemplo: Node.js server en puerto 3000
+
+    // Este array almacenará la lista básica de clientes (ID, nombre, rfc).
+    // Los datos detallados (mensuales, declaraciones, pagos) se cargarán por separado.
+    let clientes = [];
+
+    // Variable para almacenar los datos completos del cliente que se está viendo en detalle
+    let clienteDetalleActual = null;
+    let añoSeleccionadoDetalle = new Date().getFullYear(); // Año por defecto en la vista de detalle
+
+    // Variables para gráficos (declaradas aquí para que sean globales)
+    let graficoAnualChart = null;
+    let graficoMensualPieChart = null;
+
+    // Meses del año
+    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    const añoActual = new Date().getFullYear();
+
+    // Función para generar IDs únicos (necesitas una forma robusta y única)
+    function generarClienteIdUnico() {
+        // Implementación simple: prefijo + timestamp + parte aleatoria
+        // Para una aplicación seria, considera UUIDs o IDs generados por el backend si es posible.
+        return 'cliente_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // --- FUNCIONES DE UI Y NAVEGACIÓN ---
+
+    // Función para cambiar entre la vista principal (pestañas) y la vista de detalle de cliente
+    function mostrarVista(vistaId) {
+        const mainContent = document.querySelector('.main-content');
+        const detalleClienteView = document.getElementById('detalle-cliente-view');
+
+        if (vistaId === 'main') {
+            mainContent.style.display = 'block';
+            detalleClienteView.style.display = 'none';
+        } else if (vistaId === 'detalle-cliente') {
+            mainContent.style.display = 'none';
+            detalleClienteView.style.display = 'block';
+        }
+    }
+
+    // Función para cambiar de pestaña en el menú lateral
+    function openTab(event, tabId) {
+        // Asegurarse de estar en la vista principal
+        mostrarVista('main');
+
+        // Ocultar todos los contenidos de las pestañas
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        // Quitar la clase 'active' de todos los enlaces del menú lateral
+        const navLinks = document.querySelectorAll('.sidebar-nav-link');
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+
+        // Mostrar el contenido de la pestaña seleccionada
+        document.getElementById(tabId).classList.add('active');
+
+        // Añadir la clase 'active' al enlace del menú lateral seleccionado
+        if (event) { // event es null cuando se llama desde DOMContentLoaded
+            event.currentTarget.classList.add('active');
+        } else {
+            // Activar el primer enlace si se llama desde DOMContentLoaded
+            document.querySelector('.sidebar-nav-link').classList.add('active');
+        }
+
+
+        // Acciones específicas al cambiar de pestaña
+        if (tabId === 'inicio') {
+            // Al ir a inicio, primero carga la lista básica de clientes
+            // y luego actualiza el resumen basado en los datos disponibles (que pueden no estar completos sin cargar detalle)
+            cargarClientesDesdeNube().then(() => {
+                 actualizarResumenInicio();
+            });
+        }
+        if (tabId === 'clientes') {
+            // Al ir a clientes, carga la lista básica y la muestra
+            cargarClientesDesdeNube().then(() => {
+                 listarClientes();
+            });
+        }
+        if (tabId === 'graficos') {
+            cargarClientesEnSelectorGraficos(); // Cargar clientes en el selector de gráficos
+             // Ocultar el área de gráficos hasta que se seleccione un cliente
+             document.getElementById('graficos-area').style.display = 'none';
+             document.getElementById('no-cliente-selected').style.display = 'block';
+             // Destruir gráficos existentes si los hay al cambiar de pestaña
+             if (graficoAnualChart) graficoAnualChart.destroy();
+             if (graficoMensualPieChart) graficoMensualPieChart.destroy();
+             document.getElementById('pie-chart-legend').innerHTML = ''; // Limpiar leyenda
+        }
+    }
+
+    // --- FUNCIONES DE COMUNICACIÓN CON BACKEND LOCAL (Node.js) ---
+
+    // Cargar la lista básica de clientes desde el backend local
+    async function cargarClientesDesdeNube() { // Renombrada lógicamente a cargarClientesDesdeBackend
+        console.log('Cargando clientes desde el backend local...');
+        try {
+            // Usamos fetch para llamar a la URL de nuestro backend local
+            const response = await fetch(`${LOCAL_BACKEND_URL}/getClientes`);
+
+            if (!response.ok) {
+                // Si la respuesta no es OK (ej: 404, 500), lanzar un error
+                throw new Error(`Error de red o servidor: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json(); // Esperamos que el backend responda con JSON
+
+            // Asumimos que el backend local también devuelve un objeto con { success: boolean, clientes: [...] }
+            if (result.success) {
+                clientes = result.clientes || [];
+                console.log('Clientes cargados:', clientes);
+            } else {
+                 console.error('Error del backend al cargar clientes:', result.message);
+                 alert('Error al cargar clientes: ' + result.message);
+                 clientes = []; // Usar un array vacío en caso de error del backend
+            }
+
+        } catch (error) {
+            console.error('Hubo un error cargando los datos de clientes desde el backend:', error);
+            // Este alert es crucial si el backend no está corriendo o hay un error de conexión
+            alert('No se pudieron cargar los clientes. Asegúrate de que el servidor local esté corriendo y verifica la URL.');
+            clientes = []; // Fallback a array vacío en caso de error de petición
+        }
+    }
+
+    // Agregar un cliente a través del backend local
+    async function agregarCliente() {
+        const nombreInput = document.getElementById('nombre-cliente');
+        const rfcInput = document.getElementById('rfc-cliente');
+        const nombre = nombreInput.value.trim();
+        const rfc = rfcInput.value.trim();
+
+        if (nombre && rfc) {
+            const nuevoClienteId = generarClienteIdUnico(); // Generar ID en el frontend o backend? Backend es mejor.
+            // **Mejora:** Idealmente, el backend generaría el ID para asegurar unicidad centralizada.
+            // Por ahora, lo mantenemos en el frontend para que coincida con la estructura anterior.
+
+            const nuevoCliente = {
+                id: nuevoClienteId,
+                nombre: nombre,
+                rfc: rfc
+            };
+
+            try {
+                // Usamos fetch con método POST para enviar datos al backend local
+                const response = await fetch(`${LOCAL_BACKEND_URL}/agregarCliente`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(nuevoCliente) // Enviamos el objeto cliente directamente
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error de red o servidor: ${response.status} ${response.statusText}`);
+                }
+
+                const result = await response.json(); // Esperamos { success: boolean, message: string }
+
+                if (result.success) {
+                    console.log('Cliente agregado en el backend:', result.message);
+                    alert('Cliente agregado correctamente.');
+
+                    // Recarga la lista de clientes y actualiza la UI
+                    await cargarClientesDesdeNube(); // Llama a la función que usa fetch al backend local
+                    listarClientes();
+
+                    // Limpia los campos
+                    nombreInput.value = '';
+                    rfcInput.value = '';
+
+                } else {
+                    console.error('Error del backend al agregar cliente:', result.message);
+                    alert('Error al agregar cliente: ' + result.message);
+                }
+
+            } catch (error) {
+                console.error('Error en la petición para agregar cliente al backend:', error);
+                alert('No se pudo agregar el cliente. Asegúrate de que el servidor local esté corriendo.');
+            }
+        } else {
+            alert('Por favor, completa el nombre y RFC del cliente.');
+        }
+    }
+
+     // Cargar datos detallados (mensuales, decl, pagos) para un cliente/año específico desde el backend local
+     async function cargarYMostrarDatosClienteAnual(clienteId, year) {
+         console.log(`Cargando datos para Cliente: ${clienteId}, Año: ${year} desde el backend local...`);
+         try {
+            // Usamos fetch para llamar al backend local con parámetros en la URL
+            const response = await fetch(`${LOCAL_BACKEND_URL}/getDatosCliente?clienteId=${clienteId}&year=${year}`);
+
+            if (!response.ok) {
+                 throw new Error(`Error de red o servidor: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json(); // Esperamos { success: boolean, data: { datosMensuales: [...], ... } }
+
+            if (result.success && result.data) {
+                console.log('Datos anuales cargados:', result.data);
+                // Almacena los datos cargados en el objeto global del cliente de detalle actual
+                // Asegúrate de que las propiedades existen
+                clienteDetalleActual.datosPorAño = clienteDetalleActual.datosPorAño || {};
+                clienteDetalleActual.declaracionesPorAño = clienteDetalleActual.declaracionesPorAño || {};
+                clienteDetalleActual.pagosPorAño = clienteDetalleActual.pagosPorAño || {};
+
+                clienteDetalleActual.datosPorAño[year] = result.data.datosMensuales;
+                clienteDetalleActual.declaracionesPorAño[year] = result.data.declaraciones;
+                clienteDetalleActual.pagosPorAño[year] = result.data.pagos;
+
+
+                // Ahora que los datos están cargados localmente para este año, actualiza las tablas y totales
+                actualizarTablasDetalleCliente(clienteId, year);
+                actualizarTotalesAnuales(clienteId, year);
+                return true; // Indicar que la carga fue exitosa
+
+            } else {
+                console.error('Error del backend al cargar datos anuales:', result.message);
+                alert('Error al cargar datos anuales del cliente: ' + result.message);
+                // Limpiar las tablas y totales si falla la carga
+                document.getElementById('tabla-datos-mensuales').innerHTML = '<tr><td colspan="4">Error al cargar datos.</td></tr>';
+                document.getElementById('tabla-declaraciones-mensuales').innerHTML = '<tr><td colspan="2">Error al cargar datos.</td></tr>';
+                document.getElementById('tabla-pagos-mensuales').innerHTML = '<tr><td colspan="2">Error al cargar datos.</td></tr>';
+                 document.getElementById('total-ingresos-cliente').textContent = 'N/A';
+                 document.getElementById('total-gastos-cliente').textContent = 'N/A';
+                 document.getElementById('total-impuestos-cliente').textContent = 'N/A';
+                 return false; // Indicar que la carga falló
+            }
+
+         } catch (error) {
+             console.error('Error en la petición para cargar datos anuales desde el backend:', error);
+             alert('No se pudieron cargar los datos anuales del cliente. Asegúrate de que el servidor local esté corriendo.');
+             // Limpiar las tablas y totales si falla la carga
+             document.getElementById('tabla-datos-mensuales').innerHTML = '<tr><td colspan="4">Error de conexión.</td></tr>';
+             document.getElementById('tabla-declaraciones-mensuales').innerHTML = '<tr><td colspan="2">Error de conexión.</td></tr>';
+             document.getElementById('tabla-pagos-mensuales').innerHTML = '<tr><td colspan="2">Error de conexión.</td></tr>';
+              document.getElementById('total-ingresos-cliente').textContent = 'N/A';
+              document.getElementById('total-gastos-cliente').textContent = 'N/A';
+              document.getElementById('total-impuestos-cliente').textContent = 'N/A';
+              return false; // Indicar que la carga falló
+         }
+     }
+
+     // Guarda datos mensuales (Ingresos, Gastos, Impuestos) a través del backend local
+    async function guardarDatosMensuales(clienteId, year, mes, ingresos, gastos, impuestos) {
+         try {
+            // Usamos fetch con método POST para enviar datos al backend local
+            const response = await fetch(`${LOCAL_BACKEND_URL}/guardarDatosMensuales`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    clienteId: clienteId,
+                    año: year,
+                    mes: mes,
+                    ingresos: parseFloat(ingresos) || 0,
+                    gastos: parseFloat(gastos) || 0,
+                    impuestos: parseFloat(impuestos) || 0
+                })
+            });
+
+            if (!response.ok) {
+                 throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json(); // Esperamos { success: boolean, message: string }
+            if (result.success) {
+                console.log('Datos mensuales guardados en backend:', result.message);
+                // Opcional: Mostrar alguna confirmación visual al usuario
+            } else {
+                console.error('Error backend guardar datos mensuales:', result.message);
+                alert('Error al guardar datos mensuales: ' + result.message);
+                // Opcional: Considerar revertir el cambio en la UI si falla
+            }
+
+         } catch (error) {
+             console.error('Error al enviar datos mensuales al backend:', error);
+             alert('Error de conexión al guardar los datos mensuales.');
+             // Opcional: Considerar revertir el cambio en la UI si falla
+         }
+    }
+
+    // Guardar estado de declaración o pago a través del backend local
+    async function guardarEstadoMensual(clienteId, year, mes, tipo, estado) { // tipo es 'declaracion' o 'pago', estado es booleano
+         // La acción específica dependerá de cómo diseñes las rutas en tu backend Node.js
+         const endpoint = tipo === 'declaracion' ? '/actualizarDeclaracion' : '/actualizarPago';
+
+         try {
+             // Usamos fetch con método POST para enviar datos al backend local
+             const response = await fetch(`${LOCAL_BACKEND_URL}${endpoint}`, {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify({ clienteId: clienteId, año: year, mes: mes, estado: estado })
+             });
+
+             if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+             }
+             const result = await response.json(); // Esperamos { success: boolean, message: string }
+
+             if (result.success) {
+                 console.log(`Estado de ${tipo} guardado en backend:`, result.message);
+                  // Si se guardó correctamente, actualiza el resumen de inicio
+                  // Nota: Para que esto funcione bien, cargarClientesDesdeNube() o una función similar
+                  // debería traer los estados de declaración/pago del año actual para el resumen.
+                  // En un backend local, tendrías control total sobre qué datos enviar.
+                  actualizarResumenInicio();
+             } else {
+                  console.error(`Error backend guardar estado de ${tipo}:`, result.message);
+                 alert(`Error al guardar el estado de ${tipo}: ` + result.message);
+                 // Opcional: Revertir el cambio en el checkbox si falla
+                 const checkbox = document.querySelector(`[data-cliente-id="${clienteId}"] input[data-mes="${mes}"][data-tipo="${tipo}"]`);
+                 if (checkbox) checkbox.checked = !estado; // Vuelve al estado anterior
+             }
+
+         } catch (error) {
+             console.error(`Error al enviar estado de ${tipo} al backend:`, error);
+             alert(`Error de conexión al guardar el estado de ${tipo}.`);
+              // Opcional: Revertir el cambio en el checkbox si falla
+             const checkbox = document.querySelector(`[data-cliente-id="${clienteId}"] input[data-mes="${mes}"][data-tipo="${tipo}"]`);
+             if (checkbox) checkbox.checked = !estado; // Vuelve al estado anterior
+         }
+    }
+
+
+    // Guardar cambios del cliente editado a través del backend local
+    async function guardarEdicionCliente() {
+         if (!clienteDetalleActual) {
+             alert("No hay cliente para guardar cambios.");
+             return;
+         }
+
+         const editNombreInput = document.getElementById('edit-nombre-cliente');
+         const editRfcInput = document.getElementById('edit-rfc-cliente');
+         const nuevoNombre = editNombreInput.value.trim();
+         const nuevoRfc = editRfcInput.value.trim();
+
+         if (!nuevoNombre || !nuevoRfc) {
+             alert("El nombre y RFC no pueden estar vacíos.");
+             return;
+         }
+
+         // Verificar si realmente hubo cambios
+          if (nuevoNombre === clienteDetalleActual.nombre && nuevoRfc === clienteDetalleActual.rfc) {
+              alert("No se realizaron cambios.");
+              cerrarModalEditarCliente();
+              return;
+          }
+
+
+         // Enviar la actualización al backend local (POST request)
+         console.log(`Guardando edición de cliente: ID ${clienteDetalleActual.id} en backend local...`);
+         try {
+             // Usamos fetch con método POST para enviar datos al backend local
+             const response = await fetch(`${LOCAL_BACKEND_URL}/editarCliente`, {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify({
+                     id: clienteDetalleActual.id,
+                     nombre: nuevoNombre,
+                     rfc: nuevoRfc
+                 })
+             });
+
+             if (!response.ok) {
+                 throw new Error(`Error de red o servidor: ${response.status} ${response.statusText}`);
+             }
+
+             const result = await response.json(); // Esperamos { success: boolean, message: string }
+
+             if (result.success) {
+                 console.log('Cliente actualizado en backend:', result.message);
+                 alert('Cliente actualizado correctamente.');
+
+                 // Actualizar los datos del cliente en el array local 'clientes'
+                 const clienteIndex = clientes.findIndex(c => c.id === clienteDetalleActual.id);
+                 if (clienteIndex !== -1) {
+                      clientes[clienteIndex].nombre = nuevoNombre;
+                      clientes[clienteIndex].rfc = nuevoRfc;
+                      // También actualizar el objeto clienteDetalleActual
+                      clienteDetalleActual.nombre = nuevoNombre;
+                      clienteDetalleActual.rfc = nuevoRfc;
+                 }
+
+
+                 // Actualizar la vista de detalle con los nuevos datos
+                 document.getElementById('nombre-cliente-detalle').textContent = nuevoNombre;
+                 document.getElementById('rfc-cliente-detalle').textContent = nuevoRfc;
+
+                 // Opcional: Actualizar la lista de clientes en la pestaña 'clientes' si está visible
+                 listarClientes();
+
+                 cerrarModalEditarCliente(); // Cerrar el modal
+
+             } else {
+                 console.error('Error del backend al editar cliente:', result.message);
+                 alert('Error al actualizar cliente: ' + result.message);
+             }
+
+         } catch (error) {
+             console.error('Error en la petición para editar cliente al backend:', error);
+             alert('No se pudo actualizar el cliente. Asegúrate de que el servidor local esté corriendo.');
+         }
+     }
+
+
+    // --- FUNCIONES DE VISUALIZACIÓN Y EDICIÓN DE DATOS (Estas son principalmente UI y no cambian mucho) ---
+
+    // Listar clientes en la pestaña 'Clientes'
+    function listarClientes() {
+        const listaClientesDiv = document.getElementById('lista-clientes');
+        listaClientesDiv.innerHTML = ''; // Limpiar lista actual
+
+        if (!clientes || clientes.length === 0) {
+            listaClientesDiv.innerHTML = '<p class="text-gray-600">No hay clientes aún. Agrega uno para empezar.</p>';
+            return;
+        }
+
+        clientes.forEach(cliente => {
+            const clienteElement = document.createElement('div');
+            clienteElement.classList.add('card', 'cursor-pointer');
+             // Añadir un data-id para identificar el cliente al hacer clic
+            clienteElement.dataset.clientId = cliente.id;
+            clienteElement.innerHTML = `
+                <p class="font-semibold text-white">${cliente.nombre}</p>
+                <p class="text-sm text-gray-400">RFC: ${cliente.rfc}</p>
+            `;
+            // Cambia el manejador de clic para usar el ID del cliente del dataset
+            clienteElement.onclick = (event) => {
+                const clickedClientId = event.currentTarget.dataset.clientId;
+                mostrarDetalleCliente(clickedClientId);
+            }
+            listaClientesDiv.appendChild(clienteElement);
+        });
+    }
+
+    // Mostrar la vista de detalle de un cliente y cargar sus datos anuales
+    async function mostrarDetalleCliente(clienteId) {
+        // Busca el cliente básico en el array global para obtener nombre y RFC
+        const clienteBase = clientes.find(c => c.id === clienteId);
+        if (!clienteBase) {
+            console.error('Cliente no encontrado en la lista local:', clienteId);
+            alert('Error: Cliente no encontrado.');
+            return;
+        }
+
+        // Almacena el cliente base y el año por defecto para la vista de detalle
+        clienteDetalleActual = clienteBase;
+        añoSeleccionadoDetalle = new Date().getFullYear(); // Establecer el año por defecto al entrar en detalles
+
+        // Actualiza la información básica en la vista de detalle
+        document.getElementById('nombre-cliente-detalle').textContent = clienteDetalleActual.nombre;
+        document.getElementById('rfc-cliente-detalle').textContent = clienteDetalleActual.rfc;
+
+        // Cambia a la vista de detalle
+        mostrarVista('detalle-cliente');
+
+         // Cargar opciones en los selectores de año en la vista de detalle y gráficos
+         cargarSelectoresAño(clienteId);
+
+        // Carga y muestra los datos detallados para el cliente y año seleccionado desde el backend local
+        await cargarYMostrarDatosClienteAnual(clienteId, añoSeleccionadoDetalle);
+    }
+
+    // Cerrar la vista de detalle del cliente
+    function cerrarDetalleCliente() {
+        clienteDetalleActual = null; // Limpiar el cliente actual
+        añoSeleccionadoDetalle = new Date().getFullYear(); // Resetear el año
+        mostrarVista('main'); // Vuelve a la vista principal
+        // Opcional: Asegurarse de que la pestaña de clientes esté activa
+        // openTab(null, 'clientes'); // Esto podría recargar la lista si es necesario
+    }
+
+    // Cargar opciones en los selectores de año en la vista de detalle y gráficos
+    function cargarSelectoresAño(clienteId) {
+        const yearSelectorData = document.getElementById('year-selector-data');
+        const yearSelectorDeclaraciones = document.getElementById('year-selector-declaraciones');
+        const yearSelectorPagos = document.getElementById('year-selector-pagos');
+         const yearSelectorGraficos = document.getElementById('year-selector-pie'); // Selector en la vista de gráficos
+
+        // Limpiar selectores actuales
+        yearSelectorData.innerHTML = '';
+        yearSelectorDeclaraciones.innerHTML = '';
+        yearSelectorPagos.innerHTML = '';
+         yearSelectorGraficos.innerHTML = '';
+
+        // Determinar los años a mostrar (por ejemplo, año actual y 5 anteriores/1 posterior)
+        const añosAMostrar = new Set();
+         const currentYear = new Date().getFullYear();
+         for (let i = currentYear - 5; i <= currentYear + 1; i++) {
+              añosAMostrar.add(i);
+         }
+         // Si hay años con datos cargados para el cliente actual que no están en el rango, añadirlos
+         // Nota: Con un backend local, podrías tener un endpoint para obtener la lista de años con datos para un cliente.
+         if (clienteDetalleActual && clienteDetalleActual.datosPorAño) {
+              Object.keys(clienteDetalleActual.datosPorAño).forEach(año => añosAMostrar.add(parseInt(año)));
+         }
+
+
+        const sortedYears = Array.from(añosAMostrar).sort((a, b) => b - a); // Ordenar de más reciente a más antiguo
+
+        sortedYears.forEach(year => {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+             // Seleccionar el año actualmente visualizado o el año actual por defecto
+            if (year === añoSeleccionadoDetalle) {
+                 option.selected = true;
+             }
+            yearSelectorData.appendChild(option.cloneNode(true));
+            yearSelectorDeclaraciones.appendChild(option.cloneNode(true));
+            yearSelectorPagos.appendChild(option.cloneNode(true));
+             // Clonar y añadir a yearSelectorGraficos, pero seleccionar el año actual por defecto si no hay uno guardado para gráficos
+             const optionGraficos = option.cloneNode(true);
+             if (year === new Date().getFullYear()) { // Por defecto selecciona el año actual en el selector de gráficos
+                 optionGraficos.selected = true;
+             }
+             yearSelectorGraficos.appendChild(optionGraficos);
+        });
+
+        // Asegurarse de que los títulos de las tablas/secciones reflejen el año seleccionado
+        document.getElementById('declaraciones-year-title').textContent = `(${añoSeleccionadoDetalle})`;
+        document.getElementById('pagos-year-title').textContent = `(${añoSeleccionadoDetalle})`;
+    }
+
+    // Función que se llama cuando el selector de año en la vista de detalle cambia
+    async function mostrarDatosClientePorAño() {
+        const yearSelectorData = document.getElementById('year-selector-data');
+        const selectedYear = parseInt(yearSelectorData.value);
+
+        if (!clienteDetalleActual) return; // No hay cliente seleccionado
+
+        añoSeleccionadoDetalle = selectedYear; // Actualiza el año seleccionado globalmente
+
+        // Actualiza los selectores de año relacionados para que coincidan en la vista de detalle
+        document.getElementById('year-selector-declaraciones').value = selectedYear;
+        document.getElementById('year-selector-pagos').value = selectedYear;
+        // El selector de gráficos se mantiene independiente a menos que quieras sincronizarlo
+
+        // Actualiza los títulos de las secciones
+        document.getElementById('declaraciones-year-title').textContent = `(${selectedYear})`;
+        document.getElementById('pagos-year-title').textContent = `(${selectedYear})`;
+
+        // Cargar y mostrar los datos para el nuevo año seleccionado desde el backend local
+        await cargarYMostrarDatosClienteAnual(clienteDetalleActual.id, selectedYear);
+    }
+
+    // Función para actualizar las tablas en la vista de detalle después de cargar datos o editar
+    function actualizarTablasDetalleCliente(clienteId, year) {
+         if (!clienteDetalleActual || clienteDetalleActual.id !== clienteId || !clienteDetalleActual.datosPorAño || !clienteDetalleActual.declaracionesPorAño || !clienteDetalleActual.pagosPorAño) {
+             console.warn("Datos incompletos para actualizar tablas.");
+             document.getElementById('tabla-datos-mensuales').innerHTML = '<tr><td colspan="4">Datos no disponibles.</td></tr>';
+             document.getElementById('tabla-declaraciones-mensuales').innerHTML = '<tr><td colspan="2">Datos no disponibles.</td></tr>';
+             document.getElementById('tabla-pagos-mensuales').innerHTML = '<tr><td colspan="2">Datos no disponibles.</td></tr>';
+             return;
+         }
+
+        // Obtener los datos para el año especificado, usando arrays vacíos si no existen
+        const datosMensuales = clienteDetalleActual.datosPorAño[year] || [];
+        const declaraciones = clienteDetalleActual.declaracionesPorAño[year] || [];
+        const pagos = clienteDetalleActual.pagosPorAño[year] || [];
+
+        const tbodyDatos = document.getElementById('tabla-datos-mensuales');
+        const tbodyDeclaraciones = document.getElementById('tabla-declaraciones-mensuales');
+        const tbodyPagos = document.getElementById('tabla-pagos-mensuales');
+
+        tbodyDatos.innerHTML = '';
+        tbodyDeclaraciones.innerHTML = '';
+        tbodyPagos.innerHTML = '';
+
+        // Combina los datos disponibles para cada mes
+        const mesesConDatos = meses.map(mes => {
+             // Busca el dato cargado para el mes. Si no existe, usa un objeto con 0s.
+             const dato = datosMensuales.find(d => d.mes === mes) || { mes: mes, ingresos: 0, gastos: 0, impuestos: 0 };
+             const declaracionMes = declaraciones.find(d => d.mes === mes) || { mes: mes, completada: false };
+             const pagoMes = pagos.find(d => d.mes === mes) || { mes: mes, pagado: false };
+             return {
+                 mes: mes,
+                 datos: dato,
+                 declaracion: declaracionMes,
+                 pago: pagoMes
+             };
+        });
+
+
+        mesesConDatos.forEach(item => {
+            // Fila para Datos Mensuales
+            const rowDatos = tbodyDatos.insertRow();
+            rowDatos.innerHTML = `
+                <td>${item.mes}</td>
+                <td contenteditable="true" data-mes="${item.mes}" data-tipo="ingresos">${(item.datos.ingresos || 0).toFixed(2)}</td>
+                <td contenteditable="true" data-mes="${item.mes}" data-tipo="gastos">${(item.datos.gastos || 0).toFixed(2)}</td>
+                <td contenteditable="true" data-mes="${item.mes}" data-tipo="impuestos">${(item.datos.impuestos || 0).toFixed(2)}</td>
+            `;
+            // Añadir listeners de edición
+            addEditableListeners(rowDatos, clienteId, year);
+
+
+            // Fila para Declaraciones
+            const rowDeclaraciones = tbodyDeclaraciones.insertRow();
+            rowDeclaraciones.innerHTML = `
+                <td>${item.mes}</td>
+                <td><input type="checkbox" data-mes="${item.mes}" data-tipo="declaracion" ${item.declaracion.completada ? 'checked' : ''}></td>
+            `;
+            // Añadir listener para checkbox
+            addCheckboxListener(rowDeclaraciones, clienteId, year);
+
+            // Fila para Pagos
+            const rowPagos = tbodyPagos.insertRow();
+            rowPagos.innerHTML = `
+                <td>${item.mes}</td>
+                <td><input type="checkbox" data-mes="${item.mes}" data-tipo="pago" ${item.pago.pagado ? 'checked' : ''}></td>
+            `;
+            // Añadir listener para checkbox
+            addCheckboxListener(rowPagos, clienteId, year);
+
+        });
+    }
+
+    // Función para añadir listeners a celdas editables
+    function addEditableListeners(row, clienteId, year) {
+        const cells = row.querySelectorAll('td[contenteditable="true"]');
+        cells.forEach(cell => {
+            cell.addEventListener('blur', async function() {
+                const mes = this.dataset.mes;
+                const tipo = this.dataset.tipo;
+                let value = this.textContent.trim();
+
+                // Validar y formatear el valor (asegurarse de que es un número)
+                value = parseFloat(value) || 0; // Convierte a número o 0 si falla
+                this.textContent = value.toFixed(2); // Formatea de nuevo en la celda para mostrar consistencia
+
+                 // Actualizar el valor en el objeto de datos local 'clienteDetalleActual' inmediatamente
+                if (clienteDetalleActual && clienteDetalleActual.datosPorAño && clienteDetalleActual.datosPorAño[year]) {
+                    const datosMes = clienteDetalleActual.datosPorAño[year].find(d => d.mes === mes);
+                    if (datosMes) {
+                         datosMes[tipo] = value; // Actualizar el valor en el objeto local
+                    } else {
+                         // Si el mes no existe en los datos cargados (raro si la inicialización es correcta), añadirlo
+                         clienteDetalleActual.datosPorAño[year].push({ mes: mes, ingresos: 0, gastos: 0, impuestos: 0, [tipo]: value });
+                    }
+                } else {
+                     // Si el año no existe en datosPorAño, crearlo y añadir el mes
+                     clienteDetalleActual.datosPorAño = clienteDetalleActual.datosPorAño || {};
+                     clienteDetalleActual.datosPorAño[year] = [{ mes: mes, ingresos: 0, gastos: 0, impuestos: 0, [tipo]: value }];
+                }
+
+
+                // Enviar la actualización al backend local (POST request)
+                console.log(`Guardando cambio: Cliente ${clienteId}, Año ${year}, Mes ${mes}, Tipo ${tipo}, Valor ${value} en backend local...`);
+                // Obtener los valores actualizados del objeto local para enviar
+                const datosMesActualizados = clienteDetalleActual.datosPorAño[year]?.find(d => d.mes === mes) || { ingresos: 0, gastos: 0, impuestos: 0 };
+
+                try {
+                     const response = await fetch(`${LOCAL_BACKEND_URL}/guardarDatosMensuales`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            clienteId: clienteId,
+                            año: year,
+                            mes: mes,
+                            ingresos: datosMesActualizados.ingresos,
+                            gastos: datosMesActualizados.gastos,
+                            impuestos: datosMesActualizados.impuestos
+                        })
+                    });
+
+                     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                     const result = await response.json();
+                     if (result.success) {
+                         console.log('Cambio guardado en backend:', result.message);
+                          // Opcional: Mostrar alguna confirmación visual temporal
+                     } else {
+                         console.error('Error backend guardar datos:', result.message);
+                         alert('Error al guardar cambio: ' + result.message);
+                         // Opcional: Considerar revertir el cambio en la UI si falla
+                         // Esto puede ser complicado si el usuario ya hizo más cambios locales
+                     }
+
+                } catch (error) {
+                    console.error('Error al enviar actualización al backend:', error);
+                    alert('Error de conexión al guardar el cambio.');
+                    // Opcional: Considerar revertir el cambio en la UI si falla la conexión
+                }
+
+                 actualizarTotalesAnuales(clienteId, year); // Recalcular y mostrar totales después de un cambio local
+            });
+        });
+    }
+
+    // Función para añadir listeners a checkboxes
+    function addCheckboxListener(row, clienteId, year) {
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        if (checkbox) {
+             // Asociar el clienteId, año y mes al checkbox para fácil acceso si se necesita (aunque ya lo tenemos del evento)
+             checkbox.dataset.clientId = clienteId;
+             checkbox.dataset.year = year;
+
+            checkbox.addEventListener('change', async function() {
+                const mes = this.dataset.mes;
+                const tipo = this.dataset.tipo; // 'declaracion' o 'pago'
+                const isChecked = this.checked; // true o false
+                 const currentClientId = this.dataset.clientId; // Obtener ID del checkbox
+                 const currentYear = parseInt(this.dataset.year); // Obtener año del checkbox
+
+
+                 // Actualizar el estado en el objeto local 'clienteDetalleActual' inmediatamente
+                if (clienteDetalleActual && clienteDetalleActual.id === currentClientId) {
+                    if (tipo === 'declaracion') {
+                        clienteDetalleActual.declaracionesPorAño = clienteDetalleActual.declaracionesPorAño || {};
+                        clienteDetalleActual.declaracionesPorAño[currentYear] = clienteDetalleActual.declaracionesPorAño[currentYear] || [];
+                        const declMes = clienteDetalleActual.declaracionesPorAño[currentYear].find(d => d.mes === mes);
+                         if (declMes) declMes.completada = isChecked;
+                         else clienteDetalleActual.declaracionesPorAño[currentYear].push({ mes: mes, completada: isChecked }); // Añadir si no existe
+                    } else if (tipo === 'pago') {
+                         clienteDetalleActual.pagosPorAño = clienteDetalleActual.pagosPorAño || {};
+                         clienteDetalleActual.pagosPorAño[currentYear] = clienteDetalleActual.pagosPorAño[currentYear] || [];
+                         const pagoMes = clienteDetalleActual.pagosPorAño[currentYear].find(d => d.mes === mes);
+                         if (pagoMes) pagoMes.pagado = isChecked;
+                         else clienteDetalleActual.pagosPorAño[currentYear].push({ mes: mes, pagado: isChecked }); // Añadir si no existe
+                    }
+                }
+
+
+                // Enviar la actualización al backend local (POST request)
+                console.log(`Enviando actualización de estado: Cliente ${currentClientId}, Año ${currentYear}, Mes ${mes}, Tipo ${tipo}, Estado ${isChecked} a backend local...`);
+
+                // La acción específica dependerá de cómo diseñes las rutas en tu backend Node.js
+                const endpoint = tipo === 'declaracion' ? '/actualizarDeclaracion' : '/actualizarPago';
+
+                try {
+                    const response = await fetch(`${LOCAL_BACKEND_URL}${endpoint}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ clienteId: currentClientId, año: currentYear, mes: mes, estado: isChecked })
+                    });
+
+                     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                     const result = await response.json();
+
+                     if (result.success) {
+                         console.log('Estado guardado en backend:', result.message);
+                          // Si se guardó correctamente, actualiza el resumen de inicio
+                          // Esto podría requerir recargar datos del backend
+                          actualizarResumenInicio();
+                     } else {
+                          console.error(`Error backend guardar estado de ${tipo}:`, result.message);
+                         alert(`Error al guardar el estado de ${tipo}: ` + result.message);
+                         // Revertir el checkbox en la UI si falla la escritura en la nube
+                         this.checked = !isChecked;
+                         // También revertir en el objeto local
+                          if (clienteDetalleActual && clienteDetalleActual.id === currentClientId) {
+                             if (tipo === 'declaracion') {
+                                 const declMes = clienteDetalleActual.declaracionesPorAño[currentYear]?.find(d => d.mes === mes);
+                                 if (declMes) declMes.completada = !isChecked;
+                             } else if (tipo === 'pago') {
+                                  const pagoMes = clienteDetalleActual.pagosPorAño[currentYear]?.find(d => d.mes === mes);
+                                  if (pagoMes) pagoMes.pagado = !isChecked;
+                             }
+                         }
+                     }
+
+                } catch (error) {
+                    console.error(`Error al enviar estado de ${tipo} al backend:`, error);
+                    alert(`Error de conexión al guardar el estado de ${tipo}.`);
+                     // Revertir el checkbox en la UI si falla la conexión
+                    this.checked = !isChecked;
+                     // También revertir en el objeto local
+                     if (clienteDetalleActual && clienteDetalleActual.id === currentClientId) {
+                        if (tipo === 'declaracion') {
+                             const declMes = clienteDetalleActual.declaracionesPorAño[currentYear]?.find(d => d.mes === mes);
+                             if (declMes) declMes.completada = !isChecked;
+                         } else if (tipo === 'pago') {
+                              const pagoMes = clienteDetalleActual.pagosPorAño[currentYear]?.find(d => d.mes === mes);
+                              if (pagoMes) pagoMes.pagado = !isChecked;
+                         }
+                     }
+                }
+            });
+        }
+    }
+
+
+    // Calcular y mostrar los totales anuales para el cliente y año actual
+    function actualizarTotalesAnuales(clienteId, year) {
+         if (!clienteDetalleActual || clienteDetalleActual.id !== clienteId || !clienteDetalleActual.datosPorAño || !clienteDetalleActual.datosPorAño[year]) {
+             document.getElementById('total-ingresos-cliente').textContent = 'N/A';
+             document.getElementById('total-gastos-cliente').textContent = 'N/A';
+             document.getElementById('total-impuestos-cliente').textContent = 'N/A';
+             return;
+         }
+
+        const datosMensuales = clienteDetalleActual.datosPorAño[year]; // Ya filtrados por año
+
+        let totalIngresos = 0;
+        let totalGastos = 0;
+        let totalImpuestos = 0;
+
+        datosMensuales.forEach(item => {
+            totalIngresos += parseFloat(item.ingresos) || 0;
+            totalGastos += parseFloat(item.gastos) || 0;
+            totalImpuestos += parseFloat(item.impuestos) || 0;
+        });
+
+        document.getElementById('total-ingresos-cliente').textContent = totalIngresos.toFixed(2);
+        document.getElementById('total-gastos-cliente').textContent = totalGastos.toFixed(2);
+        document.getElementById('total-impuestos-cliente').textContent = totalImpuestos.toFixed(2);
+    }
+
+
+     // Actualizar el resumen en la pestaña de inicio
+    async function actualizarResumenInicio() {
+        const listaPendientesUL = document.getElementById('lista-pendientes');
+        const listaPagosUL = document.getElementById('lista-pagos');
+
+        listaPendientesUL.innerHTML = '';
+        listaPagosUL.innerHTML = '';
+
+        const añoActualResumen = new Date().getFullYear();
+
+        // **Mejora Necesaria:** En un backend local, podrías tener un endpoint
+        // específico para obtener un resumen de declaraciones/pagos pendientes para el año actual
+        // de *todos* los clientes, sin tener que cargar todos los datos anuales de cada uno.
+        // Por ahora, usaremos los datos básicos de clientes y asumiremos que
+        // los datos detallados del año actual se cargaron previamente si se visitó el detalle.
+
+        if (clientes && clientes.length > 0) {
+            // Podríamos hacer llamadas individuales al backend para cada cliente
+            // para obtener solo los estados de declaración/pago del año actual,
+            // o modificar el endpoint getClientes para que incluya esta info.
+            // Para simplificar AHORA, si los datos del año actual NO están en cliente.declaracionesPorAño[añoActualResumen],
+            // NO aparecerán en el resumen. Una implementación real de backend local
+            // debería proporcionar esta información de manera eficiente.
+
+             // --- SIMULACIÓN DE DATOS DE RESUMEN (Necesita backend real) ---
+             // En un backend real, llamarías a un endpoint como /getResumenPendientes
+             // y el backend te devolvería una lista de { clienteNombre, mes, tipo (declaracion/pago) }
+             // que están pendientes para el año actual.
+             // Como no tenemos ese backend, esta parte es conceptual.
+             // Si ya cargaste los datos de un cliente en detalle, sus pendientes del año actual
+             // sí aparecerán porque están en clienteDetalleActual.declaracionesPorAño/pagosPorAño.
+             // Esto es una limitación de esta versión local sin backend completo.
+             // -----------------------------------------------------------------
+
+             // Para demostrar algo, iteraremos sobre los clientes y sus datos *locales* si existen
+             // (cargados previamente al visitar el detalle).
+             clientes.forEach(cliente => {
+                 const declaracionesAnuales = cliente.declaracionesPorAño && cliente.declaracionesPorAño[añoActualResumen] ? cliente.declaracionesPorAño[añoActualResumen] : [];
+                 const pagosAnuales = cliente.pagosPorAño && cliente.pagosPorAño[añoActualResumen] ? cliente.pagosPorAño[añoActualResumen] : [];
+
+                 declaracionesAnuales.forEach(decl => {
+                     if (!decl.completada) {
+                         const li = document.createElement('li');
+                         li.textContent = `Declaración ${decl.mes} ${añoActualResumen} - ${cliente.nombre}`;
+                         li.classList.add('text-yellow-300');
+                         listaPendientesUL.appendChild(li);
+                     }
+                 });
+
+                 pagosAnuales.forEach(pago => {
+                     if (!pago.pagado) {
+                         const li = document.createElement('li');
+                         li.textContent = `Pago ${pago.mes} ${añoActualResumen} - ${cliente.nombre}`;
+                         li.classList.add('text-red-400');
+                         listaPagosUL.appendChild(li);
+                     }
+                 });
+             });
+
+        }
+
+
+        // Mensajes si no hay pendientes (basado en lo que se pudo cargar localmente)
+        if (listaPendientesUL.children.length === 0) {
+            const li = document.createElement('li');
+            li.textContent = 'No hay declaraciones pendientes (basado en datos cargados).';
+            li.classList.add('text-green-400');
+            listaPendientesUL.appendChild(li);
+        }
+
+         if (listaPagosUL.children.length === 0) {
+            const li = document.createElement('li');
+            li.textContent = 'No hay pagos pendientes (basado en datos cargados).';
+            li.classList.add('text-green-400');
+            listaPagosUL.appendChild(li);
+        }
+    }
+
+
+    // --- FUNCIONALIDAD DE GRÁFICOS ---
+
+    // Cargar clientes en el selector de la pestaña de gráficos
+    function cargarClientesEnSelectorGraficos() {
+        const selector = document.getElementById('cliente-selector-graficos');
+        selector.innerHTML = '<option value="">-- Selecciona un cliente --</option>'; // Opción por defecto
+
+        if (!clientes || clientes.length === 0) {
+            return;
+        }
+
+        clientes.forEach(cliente => {
+            const option = document.createElement('option');
+            option.value = cliente.id;
+            option.textContent = cliente.nombre;
+            selector.appendChild(option);
+        });
+         // Resetear el selector al estado por defecto
+         selector.value = "";
+    }
+
+    // Mostrar gráficos para el cliente seleccionado en la pestaña de gráficos
+    async function mostrarGraficosCliente() {
+        const clienteSelector = document.getElementById('cliente-selector-graficos');
+        const clienteId = clienteSelector.value;
+        const graficosArea = document.getElementById('graficos-area');
+        const noClienteSelectedMsg = document.getElementById('no-cliente-selected');
+        const mensajePersonalizado = document.getElementById('mensaje-personalizado-graficos');
+
+        // Destruir gráficos existentes si los hay antes de intentar cargar nuevos
+        if (graficoAnualChart) graficoAnualChart.destroy();
+        if (graficoMensualPieChart) graficoMensualPieChart.destroy();
+        document.getElementById('pie-chart-legend').innerHTML = ''; // Limpiar leyenda
+
+
+        if (clienteId === "") {
+            graficosArea.style.display = 'none';
+            noClienteSelectedMsg.style.display = 'block';
+            mensajePersonalizado.textContent = '';
+            return;
+        }
+
+        const clienteBase = clientes.find(c => c.id === clienteId);
+        if (!clienteBase) {
+            console.error("Cliente no encontrado para gráficos:", clienteId);
+            graficosArea.style.display = 'none';
+            noClienteSelectedMsg.style.display = 'block';
+            mensajePersonalizado.textContent = 'Error: Cliente no encontrado.';
+            return;
+        }
+
+        clienteDetalleActual = clienteBase; // Establecer el cliente actual también para la vista de gráficos
+
+        // Por defecto, mostrar gráficos del año actual al seleccionar cliente
+        añoSeleccionadoDetalle = new Date().getFullYear(); // Usar el año actual para la primera carga de gráficos
+
+        // Cargar opciones en los selectores de año para gráficos
+         cargarSelectoresAño(clienteId); // Esta función ya puebla year-selector-pie y selecciona el año actual
+
+        // Cargar los datos detallados para el cliente y año actual desde el backend local
+        const cargaExitosa = await cargarYMostrarDatosClienteAnual(clienteId, añoSeleccionadoDetalle); // Reutilizamos la función de carga
+
+         if(cargaExitosa) {
+             // Mostrar el área de gráficos si la carga fue exitosa
+             noClienteSelectedMsg.style.display = 'none';
+             graficosArea.style.display = 'block';
+             mensajePersonalizado.textContent = `Gráficos para ${clienteBase.nombre}`;
+
+             // Actualizar los gráficos con los datos cargados
+             updateAnnualChart(clienteId, añoSeleccionadoDetalle); // Gráfico anual
+             // Actualizar la gráfica mensual, por defecto para el mes seleccionado (Enero por defecto en cargarSelectoresAño)
+             updateMonthlyPieChart(); // Llama a esta función para dibujar la gráfica de pastel inicial
+         } else {
+             // Si la carga falló, ocultar gráficos y mostrar mensaje de error
+             graficosArea.style.display = 'none';
+             noClienteSelectedMsg.style.display = 'block';
+             mensajePersonalizado.textContent = 'No se pudieron cargar los datos para los gráficos.';
+         }
+    }
+
+
+    // Gráfico Anual (Evolución Mensual) - Usa clienteDetalleActual
+    function updateAnnualChart(clienteId, year) {
+        const ctx = document.getElementById('graficoAnual').getContext('2d');
+
+        // Destruir el gráfico anterior si existe
+        if (graficoAnualChart) {
+            graficoAnualChart.destroy();
+        }
+
+        // Verificar si hay datos para el cliente y año seleccionados
+        if (!clienteDetalleActual || clienteDetalleActual.id !== clienteId || !clienteDetalleActual.datosPorAño || !clienteDetalleActual.datosPorAño[year]) {
+             console.warn("Datos no disponibles para el gráfico anual del cliente:", clienteId, year);
+             // Puedes dibujar un gráfico vacío o mostrar un mensaje en el área del canvas
+             // Por ahora, simplemente destruimos el gráfico si no hay datos.
+             return;
+        }
+
+         const datosAnuales = clienteDetalleActual.datosPorAño[year] || [];
+
+        // Asegurarse de que hay datos para todos los meses, rellenando con 0 si es necesario
+         const datosCompletos = meses.map(mes => {
+             // Busca el dato cargado para el mes. Si no existe, usa un objeto con 0s.
+             const dato = datosAnuales.find(d => d.mes === mes) || { mes: mes, ingresos: 0, gastos: 0, impuestos: 0 };
+             return dato;
+         });
+
+
+        graficoAnualChart = new Chart(ctx, {
+            type: 'line', // O 'bar'
+            data: {
+                labels: meses,
+                datasets: [
+                    {
+                        label: 'Ingresos',
+                        data: datosCompletos.map(d => parseFloat(d.ingresos) || 0), // Asegurar números
+                        borderColor: '#4CAF50', // Verde
+                        backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                        tension: 0.1,
+                        fill: true
+                    },
+                    {
+                        label: 'Gastos',
+                        data: datosCompletos.map(d => parseFloat(d.gastos) || 0), // Asegurar números
+                        borderColor: '#F44336', // Rojo
+                        backgroundColor: 'rgba(244, 67, 54, 0.2)',
+                        tension: 0.1,
+                        fill: true
+                    },
+                    {
+                        label: 'Impuestos',
+                        data: datosCompletos.map(d => parseFloat(d.impuestos) || 0), // Asegurar números
+                        borderColor: '#2196F3', // Azul
+                        backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                        tension: 0.1,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                         ticks: { color: '#eee' },
+                         grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    x: {
+                         ticks: { color: '#eee' },
+                          grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                     }
+                },
+                plugins: {
+                    legend: { labels: { color: '#eee' } },
+                    title: {
+                         display: true,
+                         text: `Evolución Mensual ${year}`,
+                         color: 'white'
+                     }
+                }
+            }
+        });
+    }
+
+    // Gráfica Mensual (Pastel) - Usa clienteDetalleActual y selectores de mes/año
+    function updateMonthlyPieChart() {
+        const monthSelector = document.getElementById('month-selector-pie');
+        const yearSelector = document.getElementById('year-selector-pie');
+        const selectedMonth = monthSelector.value;
+        const selectedYear = parseInt(yearSelector.value);
+
+        const ctx = document.getElementById('graficoMensualPie').getContext('2d');
+
+         // Destruir el gráfico anterior si existe
+        if (graficoMensualPieChart) {
+            graficoMensualPieChart.destroy();
+        }
+         document.getElementById('pie-chart-legend').innerHTML = ''; // Limpiar leyenda
+
+        if (!clienteDetalleActual || !selectedMonth || !selectedYear || !clienteDetalleActual.datosPorAño || !clienteDetalleActual.datosPorAño[selectedYear]) {
+            console.warn("Datos incompletos o cliente/mes/año no seleccionado para gráfico de pastel.");
+            document.getElementById('pie-chart-legend').innerHTML = '<p class="text-gray-600">Selecciona un cliente, mes y año.</p>';
+            return;
+        }
+
+        const datosAnuales = clienteDetalleActual.datosPorAño[selectedYear];
+        const datosDelMes = datosAnuales.find(d => d.mes === selectedMonth);
+
+        if (!datosDelMes) {
+            console.warn(`Datos no disponibles para ${selectedMonth} ${selectedYear} para gráfico de pastel.`);
+            document.getElementById('pie-chart-legend').innerHTML = '<p class="text-gray-600">No hay datos disponibles para este mes y año.</p>';
+            return;
+        }
+
+
+        // Datos para el gráfico de pastel
+        const data = [
+            parseFloat(datosDelMes.ingresos) || 0,
+            parseFloat(datosDelMes.gastos) || 0,
+            parseFloat(datosDelMes.impuestos) || 0
+        ];
+        const labels = ['Ingresos', 'Gastos', 'Impuestos'];
+         const colors = ['#4CAF50', '#F44336', '#2196F3']; // Colores: Verde, Rojo, Azul
+
+
+        graficoMensualPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: colors,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }, // Ocultar la leyenda por defecto
+                    title: {
+                         display: true,
+                         text: `Desglose Mensual (${selectedMonth} ${selectedYear})`,
+                         color: 'white'
+                     },
+                     tooltip: {
+                         callbacks: {
+                             label: function(context) {
+                                 const label = context.label || '';
+                                 const value = context.raw;
+                                 const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+                                 const percentage = total === 0 ? 0 : ((value / total) * 100).toFixed(1);
+                                 return `${label}: $${value.toFixed(2)} (${percentage}%)`;
+                             }
+                         }
+                     }
+                }
+            }
+        });
+
+        // Actualizar la leyenda personalizada
+        updatePieChartLegend(labels, colors, data);
+    }
+
+    // Función para actualizar la leyenda personalizada de la gráfica de pastel
+    function updatePieChartLegend(labels, colors, data) {
+        const legendContainer = document.getElementById('pie-chart-legend');
+        legendContainer.innerHTML = '';
+
+        const total = data.reduce((sum, val) => sum + val, 0);
+
+        if (total === 0) {
+             legendContainer.innerHTML = '<p class="text-gray-600">Todos los valores son cero para este mes.</p>';
+             return;
+         }
+
+
+        labels.forEach((label, index) => {
+            const value = data[index];
+            const color = colors[index];
+            const legendItem = document.createElement('div');
+            legendItem.classList.add('pie-chart-legend-item');
+            legendItem.innerHTML = `
+                <span class="pie-chart-legend-color" style="background-color: ${color};"></span>
+                <span>${label}: $${value.toFixed(2)}</span>
+            `;
+            legendContainer.appendChild(legendItem);
+        });
+    }
+
+
+    // --- FUNCIONALIDAD DEL MODAL DE EDICIÓN DE CLIENTE ---
+
+    // Abrir el modal de edición con los datos del cliente actual
+    function abrirModalEditarCliente() {
+        if (!clienteDetalleActual) {
+            alert("No hay cliente seleccionado para editar.");
+            return;
+        }
+
+        const modal = document.getElementById('modalEditarCliente');
+        const editNombreInput = document.getElementById('edit-nombre-cliente');
+        const editRfcInput = document.getElementById('edit-rfc-cliente');
+
+        // Rellenar el modal con los datos del cliente actual
+        editNombreInput.value = clienteDetalleActual.nombre;
+        editRfcInput.value = clienteDetalleActual.rfc;
+
+        modal.style.display = 'flex'; // Mostrar el modal (usando flex para centrar)
+    }
+
+    // Cerrar el modal de edición
+    function cerrarModalEditarCliente() {
+        const modal = document.getElementById('modalEditarCliente');
+        modal.style.display = 'none'; // Ocultar el modal
+    }
+
+    // Guardar los cambios del cliente editado (llamará a guardarEdicionCliente)
+    // Este manejador solo llama a la función asíncrona.
+    // La lógica principal está en guardarEdicionCliente.
+    // (Ya está implementado arriba junto a las funciones de comunicación)
+
+
+    // --- INICIALIZACIÓN ---
+
+    // Cargar clientes desde el backend local cuando el DOM esté completamente cargado
+    document.addEventListener('DOMContentLoaded', () => {
+        // Carga inicial de clientes al cargar la página
+        cargarClientesDesdeNube().then(() => {
+            // Una vez que los clientes básicos se cargan, inicializa la UI
+            // Activa la primera pestaña por defecto ('inicio')
+            const firstNavLink = document.querySelector('.sidebar-nav-link');
+            if (firstNavLink) {
+                firstNavLink.classList.add('active');
+                // Como 'inicio' es la pestaña por defecto activa en el HTML,
+                // necesitamos actualizar su contenido.
+                actualizarResumenInicio(); // Esto ahora intentará usar los datos cargados
+            }
+            // Si la pestaña inicial fuera 'clientes', llamaríamos a listarClientes() aquí.
+            // listarClientes();
+        });
+    });
+
+</script>
+
+</body>
+</html>
